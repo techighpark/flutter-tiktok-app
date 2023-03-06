@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
+import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  void onSingUpTap(BuildContext context) {
+  void _onSingUpTap(BuildContext context) {
     Navigator.of(context).pop((MaterialPageRoute(
       builder: ((context) => const SignUpScreen()),
     )));
@@ -15,6 +17,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -39,13 +42,25 @@ class LoginScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
+              Gaps.v40,
+              AuthButton(
+                text: "Use email & password",
+                icon: FaIcon(
+                  FontAwesomeIcons.user,
+                ),
+              ),
+              Gaps.v16,
+              AuthButton(
+                text: "Continue with Apple",
+                icon: FaIcon(FontAwesomeIcons.apple),
+              ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
           elevation: 2,
-          color: Colors.grey.shade100,
+          color: Colors.grey.shade50,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: Sizes.size32,
@@ -61,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Gaps.h5,
                 GestureDetector(
-                  onTap: () => onSingUpTap(context),
+                  onTap: () => _onSingUpTap(context),
                   child: Text(
                     'Sign up',
                     style: TextStyle(
