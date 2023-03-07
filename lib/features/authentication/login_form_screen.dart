@@ -7,12 +7,19 @@ class LoginFormScreen extends StatelessWidget {
   LoginFormScreen({super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Map<String, String> formData = {};
 
   void _onSubmitTap() {
     // if (_formKey.currentState != null) {
     //   _formKey.currentState!.validate();
     // }
-    _formKey.currentState?.validate();
+    if (_formKey.currentState != null) {
+      if (_formKey.currentState!.validate()) {
+        // onSaved
+        _formKey.currentState!.save();
+        print(formData);
+      }
+    }
   }
 
   @override
@@ -33,7 +40,7 @@ class LoginFormScreen extends StatelessWidget {
               Gaps.v28,
               TextFormField(
                 validator: (value) {
-                  return "i don't like your email";
+                  return null;
                 },
                 decoration: InputDecoration(
                   hintText: 'Email',
@@ -43,11 +50,16 @@ class LoginFormScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                onSaved: (newValue) {
+                  if (newValue != null) {
+                    formData['email'] = newValue;
+                  }
+                },
               ),
               Gaps.v16,
               TextFormField(
                 validator: (value) {
-                  return "i don't like your password";
+                  return null;
                 },
                 decoration: InputDecoration(
                   hintText: 'Password',
@@ -57,6 +69,11 @@ class LoginFormScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                onSaved: (newValue) {
+                  if (newValue != null) {
+                    formData['password'] = newValue;
+                  }
+                },
               ),
               Gaps.v28,
               GestureDetector(
