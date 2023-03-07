@@ -7,6 +7,7 @@ import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
+  // safeArea
 
   void _onSingUpTap(BuildContext context) {
     Navigator.of(context).pop();

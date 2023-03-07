@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
@@ -8,6 +9,7 @@ class LoginFormScreen extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Map<String, String> formData = {};
+  bool _obscureText = true;
 
   void _onSubmitTap() {
     // if (_formKey.currentState != null) {
@@ -17,9 +19,14 @@ class LoginFormScreen extends StatelessWidget {
       if (_formKey.currentState!.validate()) {
         // onSaved
         _formKey.currentState!.save();
-        print(formData);
       }
     }
+  }
+
+  void _onClearTap() {}
+
+  void _togglenObscureText() {
+    _obscureText = !_obscureText;
   }
 
   @override
@@ -42,6 +49,7 @@ class LoginFormScreen extends StatelessWidget {
                 validator: (value) {
                   return null;
                 },
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   hintText: 'Email',
                   focusedBorder: UnderlineInputBorder(
@@ -61,7 +69,32 @@ class LoginFormScreen extends StatelessWidget {
                 validator: (value) {
                   return null;
                 },
+                obscureText: _obscureText,
                 decoration: InputDecoration(
+                  suffixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GestureDetector(
+                        onTap: _onClearTap,
+                        child: FaIcon(
+                          FontAwesomeIcons.solidCircleXmark,
+                          size: Sizes.size16 + Sizes.size2,
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      Gaps.h16,
+                      GestureDetector(
+                        onTap: _togglenObscureText,
+                        child: FaIcon(
+                          _obscureText
+                              ? FontAwesomeIcons.eye
+                              : FontAwesomeIcons.eyeSlash,
+                          size: Sizes.size16 + Sizes.size2,
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                    ],
+                  ),
                   hintText: 'Password',
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
