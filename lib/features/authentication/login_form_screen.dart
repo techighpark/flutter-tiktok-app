@@ -4,7 +4,16 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
 class LoginFormScreen extends StatelessWidget {
-  const LoginFormScreen({super.key});
+  LoginFormScreen({super.key});
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  void _onSubmitTap() {
+    // if (_formKey.currentState != null) {
+    //   _formKey.currentState!.validate();
+    // }
+    _formKey.currentState?.validate();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +27,44 @@ class LoginFormScreen extends StatelessWidget {
           horizontal: Sizes.size36,
         ),
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
-              TextFormField(),
-              Gaps.v16,
-              TextFormField(),
               Gaps.v28,
-              FormButton(
-                disabled: false,
-                text: 'Log in',
+              TextFormField(
+                validator: (value) {
+                  return "i don't like your email";
+                },
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+              Gaps.v16,
+              TextFormField(
+                validator: (value) {
+                  return "i don't like your password";
+                },
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+              Gaps.v28,
+              GestureDetector(
+                onTap: _onSubmitTap,
+                child: const FormButton(
+                  disabled: false,
+                  text: 'Log in',
+                ),
               )
             ],
           ),
