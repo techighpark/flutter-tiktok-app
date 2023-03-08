@@ -28,18 +28,21 @@ class _InterestButtonState extends State<InterestButton> {
       onTap: _onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(
-          vertical: Sizes.size16,
-          horizontal: Sizes.size24,
+        padding: EdgeInsets.symmetric(
+          vertical: _isSelected ? Sizes.size16 - Sizes.size1 : Sizes.size16,
+          horizontal: _isSelected ? Sizes.size24 - Sizes.size1 : Sizes.size24,
         ),
         decoration: BoxDecoration(
           color: _isSelected ? Theme.of(context).primaryColor : Colors.white,
           borderRadius: BorderRadius.circular(
             Sizes.size32,
           ),
-          border: Border.all(
-            color: _isSelected ? Colors.white : Colors.red.withOpacity(0.1),
-          ),
+          border: _isSelected
+              ? Border.all(
+                  color: Colors.blue.withOpacity(1),
+                  width: Sizes.size1,
+                )
+              : null,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.05),

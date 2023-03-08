@@ -57,6 +57,8 @@ class _InterestsScreenState extends State<InterestsScreen> {
   @override
   void initState() {
     super.initState();
+    print('init');
+    print(mounted);
     _scrollController.addListener(_onScroll);
   }
 
