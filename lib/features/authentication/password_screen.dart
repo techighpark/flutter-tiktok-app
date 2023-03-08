@@ -37,17 +37,15 @@ class _UsernameScreenState extends State<PasswordScreen> {
     return _password.isNotEmpty && _password.length >= 8;
   }
 
+  // scaffold tap
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
   }
 
   void _onSubmit() {
     if (!_isPasswordlValid()) return;
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const BirthdayScreen(),
-        ));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const BirthdayScreen()));
   }
 
   void _onClearTap() {

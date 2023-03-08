@@ -19,9 +19,8 @@ class _UsernameScreenState extends State<EmailScreen> {
   void initState() {
     super.initState();
     _emailController.addListener(() {
-      setState(() {
-        _email = _emailController.text;
-      });
+      _email = _emailController.text;
+      setState(() {});
     });
   }
 
