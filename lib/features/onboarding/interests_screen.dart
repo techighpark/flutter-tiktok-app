@@ -52,21 +52,29 @@ class InterestsScreen extends StatefulWidget {
 
 class _InterestsScreenState extends State<InterestsScreen> {
   final ScrollController _scrollController = ScrollController();
-
+  bool _showTitle = false;
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(() {
-      setState(() {});
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    setState(() {
+      _showTitle = _scrollController.offset > 90;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Choose your interests"),
-      ),
+      appBar: _showTitle ? AppBar() : null,
       body: Scrollbar(
         controller: _scrollController,
         child: SingleChildScrollView(
@@ -80,7 +88,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Gaps.v32,
+                Gaps.v1,
                 const Text(
                   'Choose your Interests',
                   style: TextStyle(
