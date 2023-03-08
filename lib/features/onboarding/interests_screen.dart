@@ -66,15 +66,25 @@ class _InterestsScreenState extends State<InterestsScreen> {
   }
 
   void _onScroll() {
-    setState(() {
-      _showTitle = _scrollController.offset > 90;
-    });
+    final showTitle = _scrollController.offset > 90;
+
+    if (showTitle != _showTitle) {
+      setState(() {
+        _showTitle = showTitle;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _showTitle ? AppBar() : null,
+      appBar: AppBar(
+        title: AnimatedOpacity(
+          opacity: _showTitle ? 1 : 0,
+          duration: const Duration(milliseconds: 1000),
+          child: const Text("Choose your interests"),
+        ),
+      ),
       body: Scrollbar(
         controller: _scrollController,
         child: SingleChildScrollView(
