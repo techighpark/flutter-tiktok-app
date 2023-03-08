@@ -43,16 +43,34 @@ const interests = [
   "Home & Garden",
 ];
 
-class InterestsScreen extends StatelessWidget {
+class InterestsScreen extends StatefulWidget {
   const InterestsScreen({super.key});
+
+  @override
+  State<InterestsScreen> createState() => _InterestsScreenState();
+}
+
+class _InterestsScreenState extends State<InterestsScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Choose your interests"),
-        ),
-        body: SingleChildScrollView(
+      appBar: AppBar(
+        title: const Text("Choose your interests"),
+      ),
+      body: Scrollbar(
+        controller: _scrollController,
+        child: SingleChildScrollView(
+          controller: _scrollController,
           child: Padding(
             padding: const EdgeInsets.only(
               left: Sizes.size24,
@@ -117,18 +135,32 @@ class InterestsScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: BottomAppBar(
-          elevation: 2,
-          padding: const EdgeInsets.only(
-            bottom: Sizes.size40,
-            top: Sizes.size16,
-            left: Sizes.size24,
-            right: Sizes.size24,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 2,
+        padding: const EdgeInsets.only(
+          bottom: Sizes.size40,
+          top: Sizes.size16,
+          left: Sizes.size24,
+          right: Sizes.size24,
+        ),
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            vertical: Sizes.size20,
           ),
-          child: TextButton(
-            onPressed: () {},
-            child: const Text('Next'),
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
           ),
-        ));
+          child: const Text(
+            'Next',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: Sizes.size16,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
