@@ -103,11 +103,17 @@ class _TutorialScreenState extends State<TutorialScreen> {
               vertical: Sizes.size24,
               horizontal: Sizes.size24,
             ),
-            child: CupertinoButton(
-              onPressed: () {},
-              color: Theme.of(context).primaryColor,
-              child: const Text(
-                'Enter the App!',
+            child: AnimatedOpacity(
+              opacity: _showingPage == Page.second ? 1 : 0,
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              child: CupertinoButton(
+                onPressed: () {},
+                color: Theme.of(context).primaryColor,
+                child: const Text(
+                  'Enter the App!',
+                ),
               ),
             ),
           ),
