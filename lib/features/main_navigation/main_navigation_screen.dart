@@ -21,10 +21,15 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     setState(() {});
   }
 
-  void _onPostvideoButtonTap() {
+  void _onPostVideoButtonTap() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => Container(),
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: const Text('video'),
+          ),
+        ),
+        fullscreenDialog: true,
       ),
     );
   }
@@ -83,7 +88,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               ),
               Gaps.h24,
               GestureDetector(
-                onTap: _onPostvideoButtonTap,
+                onTap: _onPostVideoButtonTap,
                 child: const PostVideoButton(),
               ),
               Gaps.h24,
