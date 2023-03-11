@@ -20,14 +20,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const Center(
       child: Text('Search'),
     ),
-    const Center(
-      child: Text('Search'),
+    Container(
+      child: const Text(''),
     ),
     const Center(
-      child: Text('Search'),
+      child: Text('Inbox'),
     ),
     const Center(
-      child: Text('Search'),
+      child: Text('Profile'),
     ),
   ];
 
@@ -40,6 +40,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: screens.elementAt(_selectedIndex),
+      // body: screens[_selectedIndex],
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Padding(
@@ -51,25 +53,29 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 text: 'Home',
                 isSelected: _selectedIndex == 0,
                 icon: FontAwesomeIcons.house,
+                selectedIcon: FontAwesomeIcons.house,
                 onTap: () => _onTap(0),
               ),
               NavTab(
                 text: 'Discover',
                 isSelected: _selectedIndex == 1,
-                icon: FontAwesomeIcons.magnifyingGlass,
+                icon: FontAwesomeIcons.compass,
+                selectedIcon: FontAwesomeIcons.solidCompass,
                 onTap: () => _onTap(1),
               ),
               NavTab(
                 text: 'Inbox',
                 isSelected: _selectedIndex == 3,
                 icon: FontAwesomeIcons.message,
-                onTap: () => _onTap(2),
+                selectedIcon: FontAwesomeIcons.solidMessage,
+                onTap: () => _onTap(3),
               ),
               NavTab(
                 text: 'Profile',
                 isSelected: _selectedIndex == 4,
                 icon: FontAwesomeIcons.user,
-                onTap: () => _onTap(3),
+                selectedIcon: FontAwesomeIcons.solidUser,
+                onTap: () => _onTap(4),
               ),
             ],
           ),
