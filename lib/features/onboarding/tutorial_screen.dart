@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
@@ -82,7 +83,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                   ),
                   Gaps.v16,
                   Text(
-                    'Videos are personalized for you based on what you watch, like, and share',
+                    'Take care of one another! please!',
                     style: TextStyle(
                       fontSize: Sizes.size20,
                     ),
@@ -93,6 +94,21 @@ class _TutorialScreenState extends State<TutorialScreen> {
                   ? CrossFadeState.showFirst
                   : CrossFadeState.showSecond,
               duration: const Duration(milliseconds: 300),
+            ),
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: Sizes.size24,
+              horizontal: Sizes.size24,
+            ),
+            child: CupertinoButton(
+              onPressed: () {},
+              color: Theme.of(context).primaryColor,
+              child: const Text(
+                'Enter the App!',
+              ),
             ),
           ),
         ),
