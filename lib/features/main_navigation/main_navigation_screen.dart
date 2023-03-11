@@ -34,6 +34,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     );
   }
 
+  void _onTapDown() {
+    _selectedIndex = 2;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,12 +51,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           Offstage(
             offstage: _selectedIndex != 1,
             child: const StfSceen(),
-          ),
-          Offstage(
-            offstage: _selectedIndex != 2,
-            child: Container(
-              child: const Text('123'),
-            ),
           ),
           Offstage(
             offstage: _selectedIndex != 3,
