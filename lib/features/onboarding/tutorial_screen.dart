@@ -96,6 +96,18 @@ class _TutorialScreenState extends State<TutorialScreen> {
             ],
           ),
         ),
+        bottomNavigationBar: BottomAppBar(
+            child: Container(
+          padding: const EdgeInsets.symmetric(
+            vertical: Sizes.size48,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              TabPageSelector(),
+            ],
+          ),
+        )),
       ),
     );
   }
