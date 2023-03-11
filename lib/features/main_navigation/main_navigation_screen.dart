@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -9,7 +9,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 0;
+  final int _selectedIndex = 0;
 
   final screens = [
     const Center(
@@ -29,36 +29,30 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     ),
   ];
 
-  void _onTap(int index) {
-    _selectedIndex = index;
-    setState(() {});
-  }
+  // void _onTap(int index) {
+  //   _selectedIndex = index;
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: screens[_selectedIndex],
-        bottomNavigationBar: NavigationBar(
-          backgroundColor: Colors.white,
-          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-          selectedIndex: _selectedIndex,
-          onDestinationSelected: _onTap,
-          destinations: const [
-            NavigationDestination(
-              icon: FaIcon(
-                FontAwesomeIcons.house,
-                color: Colors.deepOrange,
+        bottomNavigationBar: CupertinoTabScaffold(
+          tabBar: CupertinoTabBar(
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.house),
+                label: 'Home',
+                backgroundColor: Colors.black,
               ),
-              label: 'Home',
-            ),
-            NavigationDestination(
-              icon: FaIcon(
-                FontAwesomeIcons.magnifyingGlass,
-                color: Colors.deepPurple,
-              ),
-              label: 'Search',
-            ),
-          ],
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.search),
+                label: 'Search',
+              )
+            ],
+          ),
+          tabBuilder: (context, index) => screens[index],
         ));
   }
 }
