@@ -43,6 +43,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         onTap: _onTap,
         selectedItemColor: Theme.of(context).primaryColor,
         unselectedItemColor: Colors.black38,
+        type: BottomNavigationBarType.shifting,
         items: const [
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.house),
@@ -54,26 +55,26 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
             label: "Search",
             tooltip: "What are your?",
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.grey,
           ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            label: "Search",
-            tooltip: "What are your?",
-            backgroundColor: Colors.green,
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            label: "Search",
-            tooltip: "What are your?",
-            backgroundColor: Colors.purple,
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            label: "Search",
-            tooltip: "What are your?",
-            backgroundColor: Colors.indigo,
-          ),
+          // BottomNavigationBarItem(
+          //   icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+          //   label: "Search",
+          //   tooltip: "What are your?",
+          //   backgroundColor: Colors.green,
+          // ),
+          // BottomNavigationBarItem(
+          //   icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+          //   label: "Search",
+          //   tooltip: "What are your?",
+          //   backgroundColor: Colors.purple,
+          // ),
+          // BottomNavigationBarItem(
+          //   icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+          //   label: "Search",
+          //   tooltip: "What are your?",
+          //   backgroundColor: Colors.indigo,
+          // ),
         ],
       ),
     );
