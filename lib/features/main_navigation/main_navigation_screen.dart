@@ -17,7 +17,16 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     ),
     const Center(
       child: Text('Search'),
-    )
+    ),
+    const Center(
+      child: Text('Search'),
+    ),
+    const Center(
+      child: Text('Search'),
+    ),
+    const Center(
+      child: Text('Search'),
+    ),
   ];
 
   void _onTap(int index) {
@@ -36,18 +45,34 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         unselectedItemColor: Colors.black38,
         items: const [
           BottomNavigationBarItem(
-            icon: FaIcon(
-              FontAwesomeIcons.house,
-            ),
+            icon: FaIcon(FontAwesomeIcons.house),
             label: "Home",
             tooltip: "What are your?",
+            backgroundColor: Colors.amber,
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(
-              FontAwesomeIcons.magnifyingGlass,
-            ),
+            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
             label: "Search",
             tooltip: "What are your?",
+            backgroundColor: Colors.white,
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+            label: "Search",
+            tooltip: "What are your?",
+            backgroundColor: Colors.green,
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+            label: "Search",
+            tooltip: "What are your?",
+            backgroundColor: Colors.purple,
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+            label: "Search",
+            tooltip: "What are your?",
+            backgroundColor: Colors.indigo,
           ),
         ],
       ),
