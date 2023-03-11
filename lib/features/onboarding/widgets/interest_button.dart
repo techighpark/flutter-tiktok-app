@@ -39,7 +39,7 @@ class _InterestButtonState extends State<InterestButton> {
           ),
           border: _isSelected
               ? Border.all(
-                  color: Colors.blue.withOpacity(1),
+                  color: Theme.of(context).primaryColor,
                   width: Sizes.size1,
                 )
               : null,

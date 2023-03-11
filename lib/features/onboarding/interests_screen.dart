@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
 import 'package:tiktok_clone/features/onboarding/widgets/interest_button.dart';
 
 const interests = [
@@ -57,8 +58,6 @@ class _InterestsScreenState extends State<InterestsScreen> {
   @override
   void initState() {
     super.initState();
-    print('init');
-    print(mounted);
     _scrollController.addListener(_onScroll);
   }
 
@@ -76,6 +75,15 @@ class _InterestsScreenState extends State<InterestsScreen> {
         _showTitle = showTitle;
       });
     }
+  }
+
+  void _onNextTap() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const TutorialScreen(),
+      ),
+    );
   }
 
   @override
@@ -146,12 +154,15 @@ class _InterestsScreenState extends State<InterestsScreen> {
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
           ),
-          child: const Text(
-            'Next',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: Sizes.size16,
+          child: GestureDetector(
+            onTap: _onNextTap,
+            child: const Text(
+              'Next',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: Sizes.size16,
+              ),
             ),
           ),
         ),
