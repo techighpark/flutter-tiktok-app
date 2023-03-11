@@ -4,6 +4,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/stf_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
+import 'package:tiktok_clone/features/main_navigation/widgets/post_video_button.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -18,6 +19,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   void _onTap(int index) {
     _selectedIndex = index;
     setState(() {});
+  }
+
+  void _onPostvideoButtonTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Container(),
+      ),
+    );
   }
 
   @override
@@ -73,57 +82,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 onTap: () => _onTap(1),
               ),
               Gaps.h24,
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned(
-                    right: 24,
-                    child: Container(
-                      height: 35,
-                      width: 25,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Sizes.size8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xff61D4F0),
-                        borderRadius: BorderRadius.circular(Sizes.size8),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 24,
-                    child: Container(
-                      height: 35,
-                      width: 25,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Sizes.size8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(Sizes.size8),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 35,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Sizes.size12,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(
-                        Sizes.size6,
-                      ),
-                    ),
-                    child: const Center(
-                      child: FaIcon(
-                        FontAwesomeIcons.plus,
-                        color: Colors.black,
-                        size: Sizes.size20,
-                      ),
-                    ),
-                  )
-                ],
+              GestureDetector(
+                onTap: _onPostvideoButtonTap,
+                child: const PostVideoButton(),
               ),
               Gaps.h24,
               NavTab(
