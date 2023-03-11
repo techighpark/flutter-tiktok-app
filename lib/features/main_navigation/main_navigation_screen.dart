@@ -37,46 +37,28 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onTap,
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.black38,
-        type: BottomNavigationBarType.shifting,
-        items: const [
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.house),
-            label: "Home",
-            tooltip: "What are your?",
-            backgroundColor: Colors.amber,
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            label: "Search",
-            tooltip: "What are your?",
-            backgroundColor: Colors.grey,
-          ),
-          // BottomNavigationBarItem(
-          //   icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-          //   label: "Search",
-          //   tooltip: "What are your?",
-          //   backgroundColor: Colors.green,
-          // ),
-          // BottomNavigationBarItem(
-          //   icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-          //   label: "Search",
-          //   tooltip: "What are your?",
-          //   backgroundColor: Colors.purple,
-          // ),
-          // BottomNavigationBarItem(
-          //   icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-          //   label: "Search",
-          //   tooltip: "What are your?",
-          //   backgroundColor: Colors.indigo,
-          // ),
-        ],
-      ),
-    );
+        body: screens[_selectedIndex],
+        bottomNavigationBar: NavigationBar(
+          backgroundColor: Colors.white,
+          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+          selectedIndex: _selectedIndex,
+          onDestinationSelected: _onTap,
+          destinations: const [
+            NavigationDestination(
+              icon: FaIcon(
+                FontAwesomeIcons.house,
+                color: Colors.deepOrange,
+              ),
+              label: 'Home',
+            ),
+            NavigationDestination(
+              icon: FaIcon(
+                FontAwesomeIcons.magnifyingGlass,
+                color: Colors.deepPurple,
+              ),
+              label: 'Search',
+            ),
+          ],
+        ));
   }
 }
