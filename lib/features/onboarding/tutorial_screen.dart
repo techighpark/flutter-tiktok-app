@@ -103,8 +103,12 @@ class _TutorialScreenState extends State<TutorialScreen> {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              TabPageSelector(),
+            children: [
+              TabPageSelector(
+                indicatorSize: Sizes.size8,
+                selectedColor: Theme.of(context).primaryColor,
+                color: Colors.white,
+              ),
             ],
           ),
         )),
