@@ -3,7 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 class PostVideoButton extends StatelessWidget {
-  const PostVideoButton({super.key});
+  const PostVideoButton({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

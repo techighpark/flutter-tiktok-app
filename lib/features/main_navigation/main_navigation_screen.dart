@@ -22,21 +22,16 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   void _onPostVideoButtonTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: const Text('video'),
-          ),
-        ),
-        fullscreenDialog: true,
-      ),
-    );
-  }
-
-  void _onTapDown() {
-    _selectedIndex = 2;
-    setState(() {});
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (context) => Scaffold(
+    //       appBar: AppBar(
+    //         title: const Text('video'),
+    //       ),
+    //     ),
+    //     fullscreenDialog: true,
+    //   ),
+    // );
   }
 
   @override
@@ -68,7 +63,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         child: Padding(
           padding: const EdgeInsets.all(Sizes.size12),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               NavTab(
