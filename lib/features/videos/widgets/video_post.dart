@@ -48,6 +48,8 @@ class _VideoPostState extends State<VideoPost>
     _videoPlayerController.addListener(_onVideoChange);
   }
 
+// QUESTION : why don't set state in addListener - video controller
+// QUESTION : why set state in addListener - animation controller
   void _initAnimation() {
     _animationController = AnimationController(
       vsync: this,
