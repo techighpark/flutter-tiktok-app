@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_post.dart';
 
+// PageView.builder
+// - scrollDirection
+// - onPageChanged
+
 class VideoTimelineScreen extends StatefulWidget {
   const VideoTimelineScreen({super.key});
   @override
