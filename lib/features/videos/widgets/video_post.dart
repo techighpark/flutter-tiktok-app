@@ -141,6 +141,9 @@ class _VideoPostState extends State<VideoPost>
     }
     await showModalBottomSheet(
       context: context,
+      // [WTF]
+      // videoCommnets - size controll .. ListView or GridView ---- read document!
+      isScrollControlled: true,
       // barrierColor: Colors.red,
       // [WTF]
       backgroundColor: Colors.transparent,
