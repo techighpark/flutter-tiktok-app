@@ -55,7 +55,7 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
       semanticsLabel: 'abc',
       edgeOffset: 20,
       displacement: 400,
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.transparent,
       color: Colors.deepOrange,
       onRefresh: _onRefresh,
       child: PageView.builder(
