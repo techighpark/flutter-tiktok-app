@@ -198,13 +198,16 @@ class _VideoPostState extends State<VideoPost>
                 Gaps.v16,
                 GestureDetector(
                   onTap: _onTextTap,
-                  child: Text(
-                    'This is a very long text',
-                    overflow: _showMore ? null : TextOverflow.ellipsis,
-                    maxLines: 4,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: Sizes.size16,
+                  child: const SizedBox(
+                    width: 300,
+                    child: Text(
+                      'This is a very long text that will be truncated if it exceeds the container.',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: Sizes.size16,
+                      ),
                     ),
                   ),
                 ),
