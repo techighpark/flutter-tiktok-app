@@ -104,9 +104,13 @@ class _VideoPostState extends State<VideoPost>
         !_isPaused) {
       _videoPlayerController.play();
     }
+    // 다른 offStage로 넘어갔을때
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+      _onTogglePause();
+    }
   }
 
-  void _togglePause() {
+  void _onTogglePause() {
     _videoPlayerController.value.isPlaying
         ? {
             _videoPlayerController.pause(),
@@ -137,24 +141,26 @@ class _VideoPostState extends State<VideoPost>
 
   void _onCommentTap(BuildContext context) async {
     if (_videoPlayerController.value.isPlaying) {
-      _togglePause();
+      _onTogglePause();
     }
     await showModalBottomSheet(
       context: context,
       // [WTF]
       // videoCommnets - size controll .. ListView or GridView ---- read document!
+      // MediaQuery - Container - video_comments widget
       isScrollControlled: true,
       // barrierColor: Colors.red,
       // [WTF]
       backgroundColor: Colors.transparent,
       builder: (context) => const VideoComments(),
     );
-    _togglePause();
+    _onTogglePause();
   }
 
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
+      // 화면에 보이는 게 바뀔대
       onVisibilityChanged: _onVisibilityChange,
       // Q
       key: Key("${widget.index}"),
@@ -169,11 +175,12 @@ class _VideoPostState extends State<VideoPost>
           ),
           Positioned.fill(
             child: GestureDetector(
-              onTap: _togglePause,
+              onTap: _onTogglePause,
             ),
           ),
           // NOTICE: positioned - must be a child of Stack
           Positioned.fill(
+            // 클릭 비활성화 - 왜 사용했지??
             child: IgnorePointer(
               child: Center(
                 // 2nd method of animate
@@ -257,13 +264,13 @@ class _VideoPostState extends State<VideoPost>
             right: 20,
             child: Column(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
-                  foregroundColor: Colors.deepOrange,
-                  foregroundImage: NetworkImage(
+                  foregroundColor: Theme.of(context).primaryColor,
+                  foregroundImage: const NetworkImage(
                       'https://avatars.githubusercontent.com/u/75081212?v=4'),
-                  child: Text('xpzm'),
+                  child: const Text('xpzm'),
                 ),
                 Gaps.v24,
                 const VideoButton(

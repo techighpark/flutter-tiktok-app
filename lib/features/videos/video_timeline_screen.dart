@@ -51,12 +51,14 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // [WTF]
+    // RefreshIndicator
     return RefreshIndicator(
       semanticsLabel: 'abc',
       edgeOffset: 20,
       displacement: 400,
       backgroundColor: Colors.transparent,
-      color: Colors.deepOrange,
+      color: Theme.of(context).primaryColor,
       onRefresh: _onRefresh,
       child: PageView.builder(
         controller: _pageController,
