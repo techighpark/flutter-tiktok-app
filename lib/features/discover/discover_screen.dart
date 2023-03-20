@@ -21,11 +21,15 @@ class DsicoverScreen extends StatefulWidget {
 }
 
 class _DsicoverScreenState extends State<DsicoverScreen> {
-  final TextEditingController _textEditingController =
-      TextEditingController(text: 'Initial text');
+  final TextEditingController _textEditingController = TextEditingController();
+
+  bool _isWriting = false;
 
   void _onSearchChanged(String value) {
-    print(value);
+    _isWriting = _textEditingController.text.isNotEmpty;
+    setState(() {});
+
+    print(_isWriting);
   }
 
   void _onSearchSubmitted(String value) {
@@ -34,6 +38,12 @@ class _DsicoverScreenState extends State<DsicoverScreen> {
 
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
+  }
+
+  void _onSearchClearTap() {
+    _textEditingController.clear();
+    _isWriting = false;
+    setState(() {});
   }
 
   @override
@@ -62,17 +72,70 @@ class _DsicoverScreenState extends State<DsicoverScreen> {
                   child: SizedBox(
                     height: Sizes.size40,
                     child: TextField(
+                      controller: _textEditingController,
+                      onChanged: _onSearchChanged,
+                      onSubmitted: _onSearchSubmitted,
                       style: const TextStyle(
-                        fontSize: Sizes.size14,
+                        fontSize: Sizes.size16,
                       ),
                       cursorColor: Theme.of(context).primaryColor,
                       decoration: InputDecoration(
-                        prefixIcon: const FaIcon(
-                          FontAwesomeIcons.magnifyingGlass,
-                          size: Sizes.size20,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            Sizes.size40,
+                          ),
+                          borderSide: BorderSide.none,
                         ),
+                        filled: true,
+                        fillColor: Colors.grey.shade200,
+                        // enabledBorder: const OutlineInputBorder(
+                        // borderSide: BorderSide(color: Colors.blue, width: 2),
+                        // ),
+                        // focusedBorder: const OutlineInputBorder(
+                        // borderSide: BorderSide(color: Colors.red),
+                        // ),
+                        // [Q]
+                        // contentPadding: const EdgeInsets.symmetric(
+                        //   horizontal: Sizes.size40,
+                        // ),
+                        contentPadding: const EdgeInsets.all(Sizes.size10),
                         prefixIconColor: Colors.grey.shade500,
                         hintText: 'Search',
+                        hintStyle: const TextStyle(
+                          fontSize: Sizes.size12,
+                        ),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.only(
+                            left: Sizes.size16,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              FaIcon(
+                                FontAwesomeIcons.magnifyingGlass,
+                                size: Sizes.size16,
+                              ),
+                            ],
+                          ),
+                        ),
+                        suffixIcon: _isWriting
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: _onSearchClearTap,
+                                    splashColor: Colors.transparent,
+                                    icon: FaIcon(
+                                      FontAwesomeIcons.solidCircleXmark,
+                                      color: Colors.grey.shade600,
+                                      size: Sizes.size16,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : null,
                       ),
                     ),
                   ),
