@@ -62,8 +62,9 @@ class _ActivityScreenState extends State<ActivityScreen>
   ).animate(_animationController);
 
 // [WTF]
-  void _onDismissed(String notification) {
+  void _onDismissed(DismissDirection direction, String notification) {
     _notifications.remove(notification);
+    print(notification);
     setState(() {});
   }
 
@@ -85,7 +86,8 @@ class _ActivityScreenState extends State<ActivityScreen>
         title: GestureDetector(
           onTap: _toggleAnimation,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text('Activity'),
@@ -125,7 +127,8 @@ class _ActivityScreenState extends State<ActivityScreen>
               for (var notification in _notifications)
                 Dismissible(
                   key: Key(notification),
-                  onDismissed: (direction) => _onDismissed(notification),
+                  onDismissed: (direction) =>
+                      _onDismissed(direction, notification),
                   background: Container(
                     alignment: Alignment.centerLeft,
                     color: Colors.green,

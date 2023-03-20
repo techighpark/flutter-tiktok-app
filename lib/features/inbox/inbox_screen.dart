@@ -2,11 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/inbox/activity_screen.dart';
+import 'package:tiktok_clone/features/inbox/chats_screens.dart';
+import 'package:tiktok_clone/features/inbox/widgets/inbox_list_tile.dart';
 
 class InboxScreen extends StatelessWidget {
   const InboxScreen({super.key});
 
-  void _dmPressed() {}
+  void _dmPressed(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const ChatsScreen(),
+      ),
+    );
+  }
+
   void _onActivityTap(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -23,7 +32,7 @@ class InboxScreen extends StatelessWidget {
         title: const Text('Inbox'),
         actions: [
           IconButton(
-            onPressed: _dmPressed,
+            onPressed: () => _dmPressed(context),
             icon: const FaIcon(
               FontAwesomeIcons.paperPlane,
               size: Sizes.size16,
@@ -52,38 +61,11 @@ class InboxScreen extends StatelessWidget {
             height: Sizes.size1,
             color: Colors.grey.shade200,
           ),
-          ListTile(
-            leading: Container(
-              width: Sizes.size44,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.blue,
-              ),
-              child: const Center(
-                child: FaIcon(
-                  FontAwesomeIcons.users,
-                  color: Colors.white,
-                  size: Sizes.size20,
-                ),
-              ),
-            ),
-            title: const Text(
-              'New followers',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            subtitle: const Text(
-              'Messages from followers will apperr here',
-              style: TextStyle(
-                fontSize: Sizes.size12,
-              ),
-            ),
-            trailing: const FaIcon(
-              FontAwesomeIcons.chevronRight,
-              size: Sizes.size14,
-              color: Colors.black,
-            ),
+          const InboxListTile(
+            title: 'New Followers',
+            subtitle: 'Messages from followers will apperr here',
+            leadingIcon: FontAwesomeIcons.users,
+            trailingIcon: FontAwesomeIcons.chevronRight,
           ),
         ],
       ),
