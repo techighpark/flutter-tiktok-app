@@ -125,19 +125,44 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               width: MediaQuery.of(context).size.width,
               child: BottomAppBar(
                 color: Colors.grey.shade100,
-                child: Row(
-                  // textField -> width 없으면 Error
-                  children: [
-                    const Expanded(
-                      child: TextField(),
-                    ),
-                    Gaps.h20,
-                    Container(
-                      child: const FaIcon(
-                        FontAwesomeIcons.paperPlane,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Sizes.size24,
+                    vertical: Sizes.size12,
+                  ),
+                  child: Row(
+                    // textField -> width 없으면 Error
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          cursorColor: Theme.of(context).primaryColor,
+                          style: const TextStyle(
+                            fontSize: Sizes.size14,
+                          ),
+                          decoration: InputDecoration(
+                            hintText: 'Send messeges!',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                Sizes.size40,
+                              ),
+                              borderSide: BorderSide.none,
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: Sizes.size20,
+                            ),
+                          ),
+                        ),
                       ),
-                    )
-                  ],
+                      Gaps.h20,
+                      Container(
+                        child: const FaIcon(
+                          FontAwesomeIcons.paperPlane,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ))
         ],
