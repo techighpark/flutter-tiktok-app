@@ -9,7 +9,7 @@ class DiscoverPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(Sizes.size6),
+      // padding: const EdgeInsets.all(Sizes.size6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

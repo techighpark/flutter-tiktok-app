@@ -190,12 +190,13 @@ class _DsicoverScreenState extends State<DsicoverScreen> {
                 // scroll할때 keyboard dissmiss!!
                 keyboardDismissBehavior:
                     ScrollViewKeyboardDismissBehavior.onDrag,
-                // padding: const EdgeInsets.all(
-                //   Sizes.size6,
-                // ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Sizes.size6,
+                ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: Sizes.size10,
+                  crossAxisSpacing: Sizes.size10,
                   // crossAxisSpacing: Sizes.size1,
                   // mainAxisSpacing: size.height * 0.02,
                   // crossAxisSpacing: size.width * 0.05,

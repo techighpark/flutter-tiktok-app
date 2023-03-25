@@ -99,6 +99,7 @@ class _VideoPostState extends State<VideoPost>
 
 // [Q]: how to detect current video visibility?
   void _onVisibilityChange(VisibilityInfo info) {
+    if (!mounted) return;
     if (info.visibleFraction == 1 &&
         !_videoPlayerController.value.isPlaying &&
         !_isPaused) {
