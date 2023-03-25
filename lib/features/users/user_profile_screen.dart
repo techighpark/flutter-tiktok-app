@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/discover/widgets/discover_post.dart';
 import 'package:tiktok_clone/features/users/widgets/profile_information.dart';
 import 'package:tiktok_clone/features/users/widgets/profile_information_divider.dart';
 
@@ -237,10 +238,33 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  child: const TabBarView(children: [
-                    Center(child: Text('1')),
-                    Center(child: Text('2'))
-                  ]),
+                  child: TabBarView(
+                    children: [
+                      GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        // scroll할때 keyboard dissmiss!!
+                        keyboardDismissBehavior:
+                            ScrollViewKeyboardDismissBehavior.onDrag,
+                        // padding: const EdgeInsets.all(
+                        //   Sizes.size6,
+                        // ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: Sizes.size10,
+                          // crossAxisSpacing: Sizes.size1,
+                          // mainAxisSpacing: size.height * 0.02,
+                          // crossAxisSpacing: size.width * 0.05,
+                          childAspectRatio: 9 / 20,
+                        ),
+                        itemCount: 10,
+                        itemBuilder: (BuildContext context, int index) {
+                          return const DiscoverPost();
+                        },
+                      ),
+                      const Center(child: Text('2'))
+                    ],
+                  ),
                 )
               ],
             ),
