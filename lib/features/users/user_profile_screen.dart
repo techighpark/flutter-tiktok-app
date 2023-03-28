@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/settings/settings_screen.dart';
@@ -96,12 +97,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                     ),
                     Gaps.v40,
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.05,
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxHeight: Sizes.size28,
+                      ),
                       child: Row(
                         children: [
                           Expanded(
-                            flex: 3,
+                            flex: 1,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -129,7 +132,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           ),
                           Gaps.h10,
                           Expanded(
-                            flex: 2,
+                            flex: 1,
                             child: Row(
                               children: [
                                 Container(
@@ -222,27 +225,30 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           },
           body: TabBarView(
             children: [
-              GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                // scroll할때 keyboard dissmiss!!
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                // padding: const EdgeInsets.all(
-                //   Sizes.size6,
-                // ),
-                padding: EdgeInsets.zero,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: Sizes.size2,
-                  crossAxisSpacing: Sizes.size2,
-                  // mainAxisSpacing: size.height * 0.02,
-                  // crossAxisSpacing: size.width * 0.05,
-                  childAspectRatio: 9 / 12,
+              LayoutBuilder(
+                builder: (context, constraints) => GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  // scroll할때 keyboard dissmiss!!
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  // padding: const EdgeInsets.all(
+                  //   Sizes.size6,
+                  // ),
+                  padding: EdgeInsets.zero,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount:
+                        constraints.maxWidth > Breakpoints.sm ? 5 : 3,
+                    mainAxisSpacing: Sizes.size2,
+                    crossAxisSpacing: Sizes.size2,
+                    // mainAxisSpacing: size.height * 0.02,
+                    // crossAxisSpacing: size.width * 0.05,
+                    childAspectRatio: 9 / 12,
+                  ),
+                  itemCount: 40,
+                  itemBuilder: (BuildContext context, int index) {
+                    return const ProfilePost();
+                  },
                 ),
-                itemCount: 20,
-                itemBuilder: (BuildContext context, int index) {
-                  return const ProfilePost();
-                },
               ),
               const Center(child: Text('2'))
             ],
