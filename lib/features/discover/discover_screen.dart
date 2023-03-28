@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/discover/widgets/discover_post.dart';
 
@@ -54,7 +55,7 @@ class _DsicoverScreenState extends State<DsicoverScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final width = MediaQuery.of(context).size.width;
     // TabBar 사용하려면 DefaultTabController 필요
     return GestureDetector(
       onTap: _onScaffoldTap,
@@ -66,81 +67,80 @@ class _DsicoverScreenState extends State<DsicoverScreen> {
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             elevation: 1,
-            title: Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: Sizes.size40,
-                    child: TextField(
-                      controller: _textEditingController,
-                      onChanged: _onSearchChanged,
-                      onSubmitted: _onSearchSubmitted,
-                      style: const TextStyle(
-                        fontSize: Sizes.size16,
+            title: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: Breakpoints.sm,
+              ),
+              child: SizedBox(
+                height: Sizes.size40,
+                child: TextField(
+                  controller: _textEditingController,
+                  onChanged: _onSearchChanged,
+                  onSubmitted: _onSearchSubmitted,
+                  style: const TextStyle(
+                    fontSize: Sizes.size16,
+                  ),
+                  cursorColor: Theme.of(context).primaryColor,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        Sizes.size40,
                       ),
-                      cursorColor: Theme.of(context).primaryColor,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            Sizes.size40,
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                    // enabledBorder: const OutlineInputBorder(
+                    // borderSide: BorderSide(color: Colors.blue, width: 2),
+                    // ),
+                    // focusedBorder: const OutlineInputBorder(
+                    // borderSide: BorderSide(color: Colors.red),
+                    // ),
+                    // [Q]
+                    // contentPadding: const EdgeInsets.symmetric(
+                    //   horizontal: Sizes.size40,
+                    // ),
+                    contentPadding: const EdgeInsets.all(Sizes.size10),
+                    prefixIconColor: Colors.grey.shade500,
+                    hintText: 'Search',
+                    hintStyle: const TextStyle(
+                      fontSize: Sizes.size12,
+                    ),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.only(
+                        left: Sizes.size16,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          FaIcon(
+                            FontAwesomeIcons.magnifyingGlass,
+                            size: Sizes.size16,
                           ),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey.shade200,
-                        // enabledBorder: const OutlineInputBorder(
-                        // borderSide: BorderSide(color: Colors.blue, width: 2),
-                        // ),
-                        // focusedBorder: const OutlineInputBorder(
-                        // borderSide: BorderSide(color: Colors.red),
-                        // ),
-                        // [Q]
-                        // contentPadding: const EdgeInsets.symmetric(
-                        //   horizontal: Sizes.size40,
-                        // ),
-                        contentPadding: const EdgeInsets.all(Sizes.size10),
-                        prefixIconColor: Colors.grey.shade500,
-                        hintText: 'Search',
-                        hintStyle: const TextStyle(
-                          fontSize: Sizes.size12,
-                        ),
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.only(
-                            left: Sizes.size16,
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: const [
-                              FaIcon(
-                                FontAwesomeIcons.magnifyingGlass,
-                                size: Sizes.size16,
-                              ),
-                            ],
-                          ),
-                        ),
-                        suffixIcon: _isWriting
-                            ? Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    onPressed: _onSearchClearTap,
-                                    splashColor: Colors.transparent,
-                                    icon: FaIcon(
-                                      FontAwesomeIcons.solidCircleXmark,
-                                      color: Colors.grey.shade600,
-                                      size: Sizes.size16,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : null,
+                        ],
                       ),
                     ),
+                    suffixIcon: _isWriting
+                        ? Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: _onSearchClearTap,
+                                splashColor: Colors.transparent,
+                                icon: FaIcon(
+                                  FontAwesomeIcons.solidCircleXmark,
+                                  color: Colors.grey.shade600,
+                                  size: Sizes.size16,
+                                ),
+                              ),
+                            ],
+                          )
+                        : null,
                   ),
                 ),
-              ],
+              ),
             ),
             // input text field
             // cursor color cannot be changed in here but you can change in main.dart!!
@@ -193,8 +193,8 @@ class _DsicoverScreenState extends State<DsicoverScreen> {
                 padding: const EdgeInsets.symmetric(
                   horizontal: Sizes.size6,
                 ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: width > Breakpoints.lg ? 5 : 2,
                   mainAxisSpacing: Sizes.size10,
                   crossAxisSpacing: Sizes.size10,
                   // crossAxisSpacing: Sizes.size1,

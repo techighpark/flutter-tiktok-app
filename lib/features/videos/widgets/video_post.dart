@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -48,6 +49,7 @@ class _VideoPostState extends State<VideoPost>
   late bool _showMore;
 
   bool _isPaused = false;
+  bool _isMuted = true;
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
   void _onVideoChange() {
@@ -62,6 +64,9 @@ class _VideoPostState extends State<VideoPost>
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0);
+    }
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
@@ -158,6 +163,16 @@ class _VideoPostState extends State<VideoPost>
     _onTogglePause();
   }
 
+  void _onMuteTap() {
+    _isMuted = !_isMuted;
+    if (_isMuted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(20);
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -226,13 +241,15 @@ class _VideoPostState extends State<VideoPost>
                 Gaps.v16,
                 GestureDetector(
                   onTap: _onTextTap,
-                  child: const SizedBox(
+                  child: SizedBox(
                     width: 300,
                     child: Text(
                       'This is a very long text that will be truncated if it exceeds the container.',
-                      overflow: TextOverflow.ellipsis,
+                      overflow: _showMore
+                          ? TextOverflow.visible
+                          : TextOverflow.ellipsis,
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: Sizes.size16,
                       ),
@@ -290,6 +307,16 @@ class _VideoPostState extends State<VideoPost>
                 const VideoButton(
                   icon: FontAwesomeIcons.share,
                   text: "Share",
+                ),
+                Gaps.v24,
+                GestureDetector(
+                  onTap: _onMuteTap,
+                  child: VideoButton(
+                    icon: _isMuted
+                        ? FontAwesomeIcons.volumeXmark
+                        : FontAwesomeIcons.volumeHigh,
+                    text: "Mute",
+                  ),
                 )
               ],
             ),
