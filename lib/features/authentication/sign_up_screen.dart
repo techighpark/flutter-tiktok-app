@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
@@ -42,21 +43,32 @@ class SignUpScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Gaps.v80,
-                  const Text(
+                  Text(
                     'Sign up for TikTok',
-                    style: TextStyle(
-                      fontSize: Sizes.size24,
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   Gaps.v20,
-                  const Text(
-                    'Create a profile, follow other accounts, make your own videos, and more.',
-                    style: TextStyle(
-                      fontSize: Sizes.size14,
-                      color: Colors.black45,
+                  Opacity(
+                    opacity: 1,
+                    child: Text(
+                      'Create a profile, follow other accounts, make your own videos, and more.',
+                      style: GoogleFonts.aBeeZee(
+                        textStyle: const TextStyle(
+                          fontSize: Sizes.size20,
+                          color: Colors.brown,
+                        ),
+                      ),
+                      // style: TextStyle(
+                      //   fontSize: Sizes.size14,
+                      //   // color: isDarkMode(context)
+                      //   //     ? Colors.grey.shade400
+                      //   //     : Colors.black45,
+                      // ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                   Gaps.v40,
                   if (orientation == Orientation.portrait) ...[
@@ -99,8 +111,8 @@ class SignUpScreen extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: BottomAppBar(
+              // color: Theme.of(context).bottomAppBarTheme.color,
               elevation: 2,
-              color: Colors.grey.shade50,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: Sizes.size32,
