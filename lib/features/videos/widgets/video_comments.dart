@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class VideoComments extends StatefulWidget {
   const VideoComments({super.key});
@@ -33,20 +34,23 @@ class _VideoCommentsState extends State<VideoComments> {
     // [WTF]
     // Screen Size
     final size = MediaQuery.of(context).size;
+    final isDark = isDarkMode(context);
     return Container(
       // bottom sheet bar size
       height: size.height * 0.75,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Sizes.size14),
+        borderRadius: BorderRadius.circular(
+          Sizes.size14,
+        ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: isDark ? null : Colors.grey.shade50,
         appBar: AppBar(
           title: const Text('12312 commnets'),
           // 뒤로가기 버튼
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.grey.shade50,
+          backgroundColor: isDark ? null : Colors.grey.shade50,
           actions: [
             IconButton(
               onPressed: _onClosePressed,
@@ -71,8 +75,8 @@ class _VideoCommentsState extends State<VideoComments> {
                 child: ListView.separated(
                   controller: _scrollController,
                   padding: const EdgeInsets.only(
-                    left: Sizes.size24,
-                    right: Sizes.size24,
+                    left: Sizes.size16,
+                    right: Sizes.size16,
                     top: Sizes.size10,
                     bottom: Sizes.size10 + Sizes.size96,
                   ),
@@ -82,9 +86,10 @@ class _VideoCommentsState extends State<VideoComments> {
                     return Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const CircleAvatar(
+                        CircleAvatar(
                           radius: Sizes.size20,
-                          child: Text('xpzm'),
+                          backgroundColor: isDark ? Colors.grey.shade600 : null,
+                          child: const Text('xpzm'),
                         ),
                         Gaps.h12,
                         Expanded(
@@ -100,19 +105,19 @@ class _VideoCommentsState extends State<VideoComments> {
                                 ),
                               ),
                               Gaps.v4,
-                              Text(
+                              const Text(
                                 'techigh take high, your can do! 😀 😀asfsfsafsdfasdfasfasfasfasfsafasfasfasfsa',
                                 style: TextStyle(
                                   fontSize: Sizes.size14,
-                                  color: Colors.grey.shade900,
+                                  // color: Colors.grey.shade900,
                                 ),
                               ),
                               Gaps.v4,
-                              Text(
-                                'techigh take high, your can do! 😀',
+                              const Text(
+                                'flutter practice! 😀',
                                 style: TextStyle(
                                   fontSize: Sizes.size14,
-                                  color: Colors.grey.shade900,
+                                  // color: Colors.grey.shade900,
                                 ),
                               ),
                             ],
@@ -142,19 +147,22 @@ class _VideoCommentsState extends State<VideoComments> {
               Positioned(
                 bottom: 0,
                 width: size.width,
-                child: BottomAppBar(
-                  color: Colors.white,
+                child: Container(
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Sizes.size24,
-                      vertical: Sizes.size12,
+                    padding: const EdgeInsets.only(
+                      left: Sizes.size16,
+                      right: Sizes.size16,
+                      top: Sizes.size10,
+                      bottom: Sizes.size40,
                     ),
                     child: Row(
                       children: [
                         CircleAvatar(
                           radius: Sizes.size20,
-                          backgroundColor: Colors.grey.shade500,
-                          foregroundColor: Colors.white,
+                          // backgroundColor: Colors.grey.shade500,
+                          backgroundColor: isDark ? Colors.grey.shade600 : null,
+                          // foregroundColor: Colors.white,
                           child: const Text('xpzm'),
                         ),
                         Gaps.h10,
@@ -173,11 +181,15 @@ class _VideoCommentsState extends State<VideoComments> {
                               minLines: null,
                               maxLines: null,
                               expands: true,
-                              cursorColor: Theme.of(context).primaryColor,
+                              // cursorColor: Theme.of(context).primaryColor,
                               style: const TextStyle(
                                 fontSize: Sizes.size14,
                               ),
                               decoration: InputDecoration(
+                                // focusColor: Colors.green,
+                                // suffixIconColor: isDark
+                                //     ? Colors.red.shade400
+                                //     : Colors.red.shade600,
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.only(
                                     right: Sizes.size14,
@@ -185,54 +197,48 @@ class _VideoCommentsState extends State<VideoComments> {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      IconButton(
-                                        iconSize: Sizes.size16 + Sizes.size2,
-                                        constraints: BoxConstraints.tight(
-                                          const Size.fromWidth(Sizes.size28),
-                                        ),
-                                        onPressed: _onClosePressed,
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.at,
-                                          color: Colors.grey.shade900,
-                                        ),
+                                      FaIcon(
+                                        FontAwesomeIcons.at,
+                                        size: Sizes.size16,
+                                        color: isDark
+                                            ? Colors.grey.shade400
+                                            : Colors.grey.shade700,
                                       ),
-                                      IconButton(
-                                        iconSize: Sizes.size16 + Sizes.size2,
-                                        constraints: BoxConstraints.tight(
-                                          const Size.fromWidth(Sizes.size28),
-                                        ),
-                                        onPressed: _onClosePressed,
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.gift,
-                                          color: Colors.grey.shade900,
-                                        ),
+                                      Gaps.h10,
+                                      FaIcon(
+                                        FontAwesomeIcons.gift,
+                                        size: Sizes.size16,
+                                        color: isDark
+                                            ? Colors.grey.shade400
+                                            : Colors.grey.shade700,
                                       ),
-                                      IconButton(
-                                        iconSize: Sizes.size16 + Sizes.size2,
-                                        constraints: BoxConstraints.tight(
-                                          const Size.fromWidth(Sizes.size28),
-                                        ),
-                                        onPressed: _onClosePressed,
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.faceSmile,
-                                          color: Colors.grey.shade900,
-                                        ),
+                                      Gaps.h10,
+                                      FaIcon(
+                                        FontAwesomeIcons.faceSmile,
+                                        size: Sizes.size16,
+                                        color: isDark
+                                            ? Colors.grey.shade400
+                                            : Colors.grey.shade700,
                                       ),
+                                      Gaps.h10,
                                       // [WTF]
                                       // conditional button
-                                      if (_isWriting)
-                                        IconButton(
-                                          iconSize: Sizes.size16 + Sizes.size2,
-                                          constraints: BoxConstraints.tight(
-                                              const Size.fromWidth(
-                                                  Sizes.size28)),
-                                          onPressed: _onStopWriting,
-                                          icon: FaIcon(
+                                      // if (_isWriting)
+                                      AnimatedOpacity(
+                                        opacity: _isWriting ? 1 : 0,
+                                        duration: const Duration(
+                                          milliseconds: 500,
+                                        ),
+                                        child: GestureDetector(
+                                          onTap: _onStopWriting,
+                                          child: FaIcon(
                                             FontAwesomeIcons.circleArrowUp,
+                                            size: Sizes.size16,
                                             color:
                                                 Theme.of(context).primaryColor,
                                           ),
                                         ),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -244,7 +250,7 @@ class _VideoCommentsState extends State<VideoComments> {
                                   borderSide: BorderSide.none,
                                 ),
                                 filled: true,
-                                fillColor: Colors.grey.shade200,
+                                // fillColor: Colors.grey.shade200,
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: Sizes.size20,
                                 ),

@@ -4,6 +4,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/birthday_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({super.key});
@@ -145,13 +146,16 @@ class _UsernameScreenState extends State<PasswordScreen> {
                   ),
                   Gaps.h5,
                   AnimatedDefaultTextStyle(
-                      duration: const Duration(microseconds: 500),
-                      style: TextStyle(
-                        color: _isPasswordlValid()
-                            ? Colors.black
-                            : Colors.red.shade500,
-                      ),
-                      child: const Text('8 to 20 charaters'))
+                    duration: const Duration(microseconds: 500),
+                    style: TextStyle(
+                      color: _isPasswordlValid()
+                          ? isDarkMode(context)
+                              ? Colors.white
+                              : Colors.black
+                          : Colors.red.shade500,
+                    ),
+                    child: const Text('8 to 20 charaters'),
+                  )
                 ],
               ),
               Gaps.v28,

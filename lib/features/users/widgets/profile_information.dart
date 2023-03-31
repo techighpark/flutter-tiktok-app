@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class ProfileInformation extends StatelessWidget {
   const ProfileInformation({
@@ -28,7 +29,9 @@ class ProfileInformation extends StatelessWidget {
         Text(
           informationTitle,
           style: TextStyle(
-            color: Colors.grey.shade500,
+            color: isDarkMode(context)
+                ? Colors.grey.shade200
+                : Colors.grey.shade500,
           ),
         ),
       ],

@@ -3,6 +3,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
 import 'package:tiktok_clone/features/onboarding/widgets/interest_button.dart';
+import 'package:tiktok_clone/utils.dart';
 
 const interests = [
   "Daily Life",
@@ -139,8 +140,8 @@ class _InterestsScreenState extends State<InterestsScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 2,
+      bottomNavigationBar: Container(
+        color: isDarkMode(context) ? Colors.black : Colors.white,
         padding: const EdgeInsets.only(
           bottom: Sizes.size40,
           top: Sizes.size16,
@@ -149,7 +150,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
         ),
         child: Container(
           padding: const EdgeInsets.symmetric(
-            vertical: Sizes.size20,
+            vertical: Sizes.size16,
           ),
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,

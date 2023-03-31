@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({super.key});
@@ -15,33 +16,36 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
         title: ListTile(
-          contentPadding: EdgeInsets.zero,
+          contentPadding: const EdgeInsets.only(
+            right: Sizes.size20,
+          ),
           horizontalTitleGap: Sizes.size10,
           leading: Stack(
             // alignment: AlignmentDirectional.bottomEnd,
             children: [
               const Padding(
-                padding: EdgeInsets.all(3.0),
+                padding: EdgeInsets.zero,
                 child: CircleAvatar(
                   radius: Sizes.size24,
                   child: Text('tech'),
                 ),
               ),
               Positioned(
-                bottom: 0,
-                right: 0,
+                bottom: 2,
+                right: 2,
                 child: Container(
-                  width: Sizes.size20,
-                  height: Sizes.size20,
+                  width: Sizes.size14,
+                  height: Sizes.size14,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
                   ),
                   child: Center(
                     child: Container(
-                      width: Sizes.size12,
-                      height: Sizes.size12,
+                      width: Sizes.size8,
+                      height: Sizes.size8,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.deepOrange,
@@ -61,16 +65,16 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           subtitle: const Text('Active now'),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               FaIcon(
                 FontAwesomeIcons.flag,
-                color: Colors.black,
+                color: isDarkMode(context) ? Colors.white : Colors.black,
                 size: Sizes.size20,
               ),
               Gaps.h32,
               FaIcon(
                 FontAwesomeIcons.ellipsis,
-                color: Colors.black,
+                color: isDarkMode(context) ? Colors.white : Colors.black,
                 size: Sizes.size20,
               ),
             ],
@@ -80,11 +84,14 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       body: Stack(
         children: [
           ListView.separated(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Sizes.size14,
-              vertical: Sizes.size20,
+            padding: const EdgeInsets.only(
+              right: Sizes.size14,
+              left: Sizes.size14,
+              top: Sizes.size14,
+              bottom: 120,
             ),
-            itemCount: 10,
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            itemCount: 20,
             separatorBuilder: (context, index) => Gaps.v10,
             itemBuilder: (context, index) {
               final bool isMine = index % 2 == 0;
@@ -123,17 +130,24 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           Positioned(
               bottom: 0,
               width: MediaQuery.of(context).size.width,
-              child: BottomAppBar(
-                color: Colors.grey.shade100,
+              child: Container(
+                color: isDarkMode(context)
+                    ? Colors.grey.shade900
+                    : Colors.grey.shade100,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Sizes.size24,
-                    vertical: Sizes.size12,
+                  padding: const EdgeInsets.only(
+                    right: Sizes.size24,
+                    left: Sizes.size24,
+                    top: Sizes.size12,
+                    bottom: Sizes.size56,
                   ),
                   child: Row(
                     // textField -> width 없으면 Error
                     children: [
                       Expanded(
+                        // child: CupertinoTextField(
+                        //   placeholder: 'Send messages!',
+                        // ),
                         child: TextField(
                           cursorColor: Theme.of(context).primaryColor,
                           style: const TextStyle(
@@ -147,7 +161,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                               ),
                               borderSide: BorderSide.none,
                             ),
-                            fillColor: Colors.white,
+                            fillColor: isDarkMode(context)
+                                ? Colors.black
+                                : Colors.white,
                             filled: true,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: Sizes.size20,
@@ -157,8 +173,24 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                       ),
                       Gaps.h20,
                       Container(
+                        padding: const EdgeInsets.all(
+                          Sizes.size10,
+                        ),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: isDarkMode(context)
+                              ? Colors.grey.shade700
+                              : Colors.grey.shade300,
+                          border: Border.all(
+                            color: isDarkMode(context)
+                                ? Colors.grey.shade500
+                                : Colors.grey.shade500,
+                            width: 2,
+                          ),
+                        ),
                         child: const FaIcon(
                           FontAwesomeIcons.paperPlane,
+                          size: Sizes.size16,
                         ),
                       )
                     ],

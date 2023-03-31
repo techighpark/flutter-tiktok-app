@@ -89,7 +89,7 @@ class _DsicoverScreenState extends State<DsicoverScreen> {
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.grey.shade200,
+                    // fillColor: Colors.grey.shade200,
                     // enabledBorder: const OutlineInputBorder(
                     // borderSide: BorderSide(color: Colors.blue, width: 2),
                     // ),
@@ -100,7 +100,9 @@ class _DsicoverScreenState extends State<DsicoverScreen> {
                     // contentPadding: const EdgeInsets.symmetric(
                     //   horizontal: Sizes.size40,
                     // ),
-                    contentPadding: const EdgeInsets.all(Sizes.size10),
+                    // contentPadding: const EdgeInsets.all(
+                    //   Sizes.size10,
+                    // ),
                     prefixIconColor: Colors.grey.shade500,
                     hintText: 'Search',
                     hintStyle: const TextStyle(
@@ -159,7 +161,6 @@ class _DsicoverScreenState extends State<DsicoverScreen> {
               //     horizontal: 16.0,
               //   ),
               // ),
-
               splashFactory: NoSplash.splashFactory,
               padding: const EdgeInsets.symmetric(
                 horizontal: Sizes.size16,
@@ -168,9 +169,10 @@ class _DsicoverScreenState extends State<DsicoverScreen> {
                 horizontal: Sizes.size16,
               ),
               isScrollable: true,
-              labelColor: Colors.black,
-              unselectedLabelColor: Colors.grey.shade500,
-              indicatorColor: Theme.of(context).primaryColor,
+              // labelColor:
+              //     isDarkMode(context) ? Colors.grey.shade50 : Colors.black,
+              // unselectedLabelColor: Colors.orange.shade500,
+              indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
               labelStyle: const TextStyle(
                 fontWeight: FontWeight.w600,
               ),
@@ -192,6 +194,7 @@ class _DsicoverScreenState extends State<DsicoverScreen> {
                     ScrollViewKeyboardDismissBehavior.onDrag,
                 padding: const EdgeInsets.symmetric(
                   horizontal: Sizes.size6,
+                  vertical: Sizes.size6,
                 ),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: width > Breakpoints.lg ? 5 : 2,
@@ -202,7 +205,7 @@ class _DsicoverScreenState extends State<DsicoverScreen> {
                   // crossAxisSpacing: size.width * 0.05,
                   childAspectRatio: 9 / 20,
                 ),
-                itemCount: 10,
+                itemCount: 20,
                 itemBuilder: (BuildContext context, int index) {
                   return const DiscoverPost();
                 },

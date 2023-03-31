@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class DiscoverPost extends StatelessWidget {
   const DiscoverPost({super.key});
@@ -31,11 +32,12 @@ class DiscoverPost extends StatelessWidget {
               ),
             ),
             Gaps.v10,
-            Text(
-              '${constraints.maxWidth} Cajun chiken Alfredo,Cajun chiken Alfredo,Cajun chiken Alfredo,Cajun chiken Alfredo,Cajun chiken Alfredo,Cajun chiken Alfredo',
-              style: const TextStyle(
-                fontSize: Sizes.size14,
+            const Text(
+              'Cajun chiken Alfredo,Cajun chiken Alfredo,Cajun chiken Alfredo,Cajun chiken Alfredo,Cajun chiken Alfredo,Cajun chiken Alfredo',
+              style: TextStyle(
+                fontSize: Sizes.size16,
                 fontWeight: FontWeight.bold,
+                height: 1.1,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -56,42 +58,44 @@ class DiscoverPost extends StatelessWidget {
             ),
             Gaps.v5,
             // textstyle 통일
-            if (constraints.maxWidth < 200 || constraints.maxWidth > 250)
-              DefaultTextStyle(
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey.shade600,
-                ),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: Sizes.size14,
-                      backgroundColor: Colors.black,
-                      foregroundColor: Theme.of(context).primaryColor,
-                      foregroundImage: const NetworkImage(
-                          'https://avatars.githubusercontent.com/u/75081212?v=4'),
-                    ),
-                    Gaps.h8,
-                    const Expanded(
-                      child: Text(
-                        'My Avartar is going to be very long',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    Gaps.h4,
-                    FaIcon(
-                      FontAwesomeIcons.heart,
-                      size: Sizes.size16,
-                      color: Colors.grey.shade500,
-                    ),
-                    Gaps.h4,
-                    const Text(
-                      '2.5M',
-                    )
-                  ],
-                ),
+            // if (constraints.maxWidth < 210 || constraints.maxWidth > 250)
+            DefaultTextStyle(
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: isDarkMode(context)
+                    ? Colors.grey.shade400
+                    : Colors.grey.shade600,
               ),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: Sizes.size14,
+                    backgroundColor: Colors.black,
+                    foregroundColor: Theme.of(context).primaryColor,
+                    foregroundImage: const NetworkImage(
+                        'https://avatars.githubusercontent.com/u/75081212?v=4'),
+                  ),
+                  Gaps.h8,
+                  const Expanded(
+                    child: Text(
+                      'My Avartar is going to be very long',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Gaps.h4,
+                  FaIcon(
+                    FontAwesomeIcons.heart,
+                    size: Sizes.size16,
+                    color: Colors.grey.shade500,
+                  ),
+                  Gaps.h4,
+                  const Text(
+                    '2.5M',
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),

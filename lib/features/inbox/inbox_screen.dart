@@ -4,6 +4,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/inbox/activity_screen.dart';
 import 'package:tiktok_clone/features/inbox/chats_screens.dart';
 import 'package:tiktok_clone/features/inbox/widgets/inbox_list_tile.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class InboxScreen extends StatelessWidget {
   const InboxScreen({super.key});
@@ -59,7 +60,9 @@ class InboxScreen extends StatelessWidget {
           ),
           Container(
             height: Sizes.size1,
-            color: Colors.grey.shade200,
+            color: isDarkMode(context)
+                ? Colors.grey.shade800
+                : Colors.grey.shade200,
           ),
           const InboxListTile(
             title: 'New Followers',
