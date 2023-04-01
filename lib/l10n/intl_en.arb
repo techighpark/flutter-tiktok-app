@@ -1,0 +1,62 @@
+{
+  "signUpTitle": "Sign up for {nameOfTheApp} {when}",
+  "@signUpTitle": {
+    "description": "The title people see when they open the app for the first time.",
+    "placeholders": {
+      "nameOfTheApp": {
+        "type": "String",
+        "example": "TikTok"
+      },
+      "when": {
+        "type": "DateTime",
+        "format": "yQQQQ 😃 LLLL 🪀 Hm",
+        "isCustomDateFormat": "true"
+      }
+    }
+  },
+  "loginTitle": "Login into your {nameOfTheApp} account",
+  "@loginTitle": {
+    "description": "The title people see when they login screen.",
+    "placeholders": {
+      "nameOfTheApp": {
+        "type": "String",
+        "example": "TikTok"
+      }
+    }
+  },
+  "signUpSubtitle": "Create a profile, follow other accounts, make your own {videoCount, plural, =0{no videos} =1{video} other{videos}}, and more.",
+  "emailPasswordButton": "Use email & password",
+  "appleButton": "Continue with Apple",
+  "alreadyHaveAnAccount": "Already have an account?",
+  "logIn": "Log in, {gender, select, male{sir} femail{madam} other{human}}",
+  "likeCount": "{value, plural, =0{no commnets} =1{comment} other{comments}}",
+  "@likeCount": {
+    "description": "blah blah",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "commentCount": "{value}",
+  "@commentCount": {
+    "description": "blah blah",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "commnetTitle": "{value} {value2, plural, =1{comment} other{comments}}",
+  "@commnetTitle": {
+    "description": "blah blah",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compactCurrency"
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/utils.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 
 class VideoComments extends StatefulWidget {
   const VideoComments({super.key});
@@ -47,7 +48,9 @@ class _VideoCommentsState extends State<VideoComments> {
       child: Scaffold(
         backgroundColor: isDark ? null : Colors.grey.shade50,
         appBar: AppBar(
-          title: const Text('12312 commnets'),
+          title: Text(
+            S.of(context).commnetTitle(99203, 99203),
+          ),
           // 뒤로가기 버튼
           automaticallyImplyLeading: false,
           backgroundColor: isDark ? null : Colors.grey.shade50,

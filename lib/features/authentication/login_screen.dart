@@ -5,6 +5,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok_clone/utils.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -32,9 +33,9 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               Gaps.v80,
-              const Text(
-                'Log in to TikTok',
-                style: TextStyle(
+              Text(
+                S.of(context).loginTitle('TecHigh'),
+                style: const TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w800,
                 ),
