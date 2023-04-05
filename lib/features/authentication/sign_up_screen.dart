@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
@@ -9,10 +10,21 @@ import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static String routeName = "/";
+  static const routeUrl = "/";
+  static const routeName = "signup";
   const SignUpScreen({super.key});
   void _onLoginTap(BuildContext context) async {
-    await Navigator.of(context).pushNamed(LoginScreen.routeName);
+    context.push(LoginScreen.routeName);
+    // context.push(LoginScreen.routeName);
+    //
+    // final result = await Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => const LoginScreen(),
+    //   ),
+    // );
+    //
+    // await Navigator.of(context).pushNamed(LoginScreen.routeName);
     // await Navigator.of(context).push(
     //   MaterialPageRoute(
     //     builder: (context) => const LoginScreen(),
@@ -22,8 +34,11 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.of(context).pushNamed(UsernameScreen.routeName);
-
+    context.pushNamed(UsernameScreen.routeName);
+    // context.push(UsernameScreen.routeName);
+    //
+    // Navigator.of(context).pushNamed(UsernameScreen.routeName);
+    //
     // Navigator.of(context).push(
     //   PageRouteBuilder(
     //     // transitionDuration: const Duration(seconds: 5),
@@ -98,7 +113,7 @@ class SignUpScreen extends StatelessWidget {
                   Opacity(
                     opacity: 0.7,
                     child: Text(
-                      S.of(context).signUpSubtitle(0),
+                      S.of(context).signUpSubtitle(1),
                       style: const TextStyle(
                         fontSize: Sizes.size16,
                       ),
@@ -128,7 +143,7 @@ class SignUpScreen extends StatelessWidget {
                             onTap: () => _onEmailTap(context),
                             child: AuthButton(
                               icon: const FaIcon(FontAwesomeIcons.user),
-                              text: S.of(context).signUpSubtitle(1),
+                              text: S.of(context).emailPasswordButton,
                             ),
                           ),
                         ),
@@ -136,7 +151,7 @@ class SignUpScreen extends StatelessWidget {
                         Expanded(
                           child: AuthButton(
                             icon: const FaIcon(FontAwesomeIcons.apple),
-                            text: S.of(context).emailPasswordButton,
+                            text: S.of(context).appleButton,
                           ),
                         )
                       ],

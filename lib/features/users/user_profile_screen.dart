@@ -10,7 +10,13 @@ import 'package:tiktok_clone/features/users/widgets/profile_information_divider.
 import 'package:tiktok_clone/features/users/widgets/profile_post.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+  final String username;
+  final String tab;
+  const UserProfileScreen({
+    super.key,
+    required this.username,
+    required this.tab,
+  });
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -31,12 +37,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       body: SafeArea(
         child: DefaultTabController(
+          initialIndex: widget.tab == 'likes' ? 1 : 0,
           length: 2,
           child: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
                 SliverAppBar(
-                  title: const Text('techigh_'),
+                  title: Text(widget.username),
                   // backgroundColor:
                   //     isDarkMode(context) ? Colors.black : Colors.white,
                   actions: [
@@ -66,9 +73,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              '@techigh_',
-                              style: TextStyle(
+                            Text(
+                              '@${widget.username}}',
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: Sizes.size16,
                               ),
