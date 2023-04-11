@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -39,6 +41,9 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
   bool _isSelfieMode = false;
+  // debug mode and isIOS = camera off
+  late final bool _noCamera = kDebugMode && Platform.isIOS;
+
   bool _isCameraInitialized = false;
   late bool _isTorchAvailable = true;
 
@@ -77,9 +82,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
   Future<void> initCamera() async {
     final cameras = await availableCameras();
-    print(cameras);
     if (cameras.isEmpty) {
-      print('no camera???');
       return;
     } else {
       _cameraController = CameraController(
@@ -199,7 +202,13 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   @override
   void initState() {
     super.initState();
-    initPermission();
+    if (!_noCamera) {
+      initPermission();
+    } else {
+      setState(() {
+        _hasPermission = true;
+      });
+    }
     WidgetsBinding.instance.addObserver(this);
     _progressAnimationController.addListener(() {
       setState(() {});
@@ -227,7 +236,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: !_hasPermission || !_isCameraInitialized
+        child: !_hasPermission
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -240,33 +249,35 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
             : Stack(
                 alignment: Alignment.topCenter,
                 children: [
-                  CameraPreview(_cameraController),
-                  Positioned(
-                    top: Sizes.size60,
-                    right: Sizes.size20,
-                    child: Column(
-                      children: [
-                        IconButton(
-                          color: Colors.white,
-                          onPressed: _setSelfieMode,
-                          icon: const Icon(
-                            Icons.cameraswitch,
-                          ),
-                        ),
-                        for (var button in flashButtons)
-                          if (button['flashMode'] != FlashMode.torch ||
-                              (button['flashMode'] == FlashMode.torch &&
-                                  _isTorchAvailable))
-                            VideoFlashButton(
-                              isCurrentFlashMode:
-                                  isCurrentFlashMode(button['flashMode']),
-                              onPressed: () =>
-                                  _setFlashMode(button['flashMode']),
-                              icon: button['icon'],
+                  if (!_noCamera && _cameraController.value.isInitialized)
+                    CameraPreview(_cameraController),
+                  if (!_noCamera)
+                    Positioned(
+                      top: Sizes.size60,
+                      right: Sizes.size20,
+                      child: Column(
+                        children: [
+                          IconButton(
+                            color: Colors.white,
+                            onPressed: _setSelfieMode,
+                            icon: const Icon(
+                              Icons.cameraswitch,
                             ),
-                      ],
+                          ),
+                          for (var button in flashButtons)
+                            if (button['flashMode'] != FlashMode.torch ||
+                                (button['flashMode'] == FlashMode.torch &&
+                                    _isTorchAvailable))
+                              VideoFlashButton(
+                                isCurrentFlashMode:
+                                    isCurrentFlashMode(button['flashMode']),
+                                onPressed: () =>
+                                    _setFlashMode(button['flashMode']),
+                                icon: button['icon'],
+                              ),
+                        ],
+                      ),
                     ),
-                  ),
                   Positioned(
                     bottom: Sizes.size52,
                     width: MediaQuery.of(context).size.width,
