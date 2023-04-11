@@ -49,6 +49,8 @@
 		<string>your usage description here</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>your usage description here</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>photo library for save video</string>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
 	</dict>
