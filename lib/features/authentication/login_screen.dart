@@ -9,7 +9,8 @@ import 'package:tiktok_clone/utils.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 
 class LoginScreen extends StatelessWidget {
-  static String routeName = "/login";
+  static String routeUrl = "/login";
+  static String routeName = "login";
   const LoginScreen({super.key});
   // safeArea
 
@@ -26,7 +27,6 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(

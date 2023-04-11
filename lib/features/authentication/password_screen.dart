@@ -45,8 +45,12 @@ class _UsernameScreenState extends State<PasswordScreen> {
 
   void _onSubmit() {
     if (!_isPasswordlValid()) return;
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const BirthdayScreen()));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const BirthdayScreen(),
+      ),
+    );
   }
 
   void _onClearTap() {
