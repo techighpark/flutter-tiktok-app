@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/video_configuration/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
@@ -50,7 +51,7 @@ class _VideoPostState extends State<VideoPost>
   late bool _showMore;
 
   bool _isPaused = false;
-  bool _isMuted = true;
+  final bool _isMuted = true;
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
   void _onVideoChange() {
@@ -164,15 +165,15 @@ class _VideoPostState extends State<VideoPost>
     _onTogglePause();
   }
 
-  void _onMuteTap() {
-    _isMuted = !_isMuted;
-    if (_isMuted) {
-      _videoPlayerController.setVolume(0);
-    } else {
-      _videoPlayerController.setVolume(20);
-    }
-    setState(() {});
-  }
+  // void _onMuteTap() {
+  //   _isMuted = !_isMuted;
+  //   if (_isMuted) {
+  //     _videoPlayerController.setVolume(0);
+  //   } else {
+  //     _videoPlayerController.setVolume(20);
+  //   }
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -222,6 +223,19 @@ class _VideoPostState extends State<VideoPost>
                     ),
                   ),
                 ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 20,
+            top: 40,
+            child: IconButton(
+              onPressed: VideoConfigData.of(context).toggleMuted,
+              icon: FaIcon(
+                VideoConfigData.of(context).autoMute
+                    ? FontAwesomeIcons.volumeHigh
+                    : FontAwesomeIcons.volumeOff,
+                color: Colors.white,
               ),
             ),
           ),
@@ -309,16 +323,16 @@ class _VideoPostState extends State<VideoPost>
                   icon: FontAwesomeIcons.share,
                   text: "Share",
                 ),
-                Gaps.v24,
-                GestureDetector(
-                  onTap: _onMuteTap,
-                  child: VideoButton(
-                    icon: _isMuted
-                        ? FontAwesomeIcons.volumeXmark
-                        : FontAwesomeIcons.volumeHigh,
-                    text: "Mute",
-                  ),
-                )
+                // Gaps.v24,
+                // GestureDetector(
+                //   onTap: _onMuteTap,
+                //   child: VideoButton(
+                //     icon: _isMuted
+                //         ? FontAwesomeIcons.volumeXmark
+                //         : FontAwesomeIcons.volumeHigh,
+                //     text: "Mute",
+                //   ),
+                // )
               ],
             ),
           ),
