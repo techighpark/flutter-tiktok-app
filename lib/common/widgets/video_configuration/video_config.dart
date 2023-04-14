@@ -11,9 +11,9 @@ class VideoConfigData extends InheritedWidget {
     required this.toggleMuted,
   });
 
-  static VideoConfigData of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<VideoConfigData>()!;
-  }
+  // static VideoConfigData of(BuildContext context) {
+  //   return context.dependOnInheritedWidgetOfExactType<VideoConfigData>()!;
+  // }
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {

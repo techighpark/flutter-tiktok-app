@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tiktok_clone/common/widgets/video_configuration/video_config.dart';
+import 'package:tiktok_clone/common/widgets/video_configuration/video_config_noti.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
@@ -51,7 +51,8 @@ class _VideoPostState extends State<VideoPost>
   late bool _showMore;
 
   bool _isPaused = false;
-  final bool _isMuted = true;
+  bool _isMuted = true;
+  bool _autoMuted = videoConfigNoti.autoMute;
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
   void _onVideoChange() {
@@ -102,6 +103,11 @@ class _VideoPostState extends State<VideoPost>
     _initVideoPlayer();
     _initAnimation();
     _initShowMore();
+    videoConfigNoti.addListener(() {
+      setState(() {
+        _autoMuted = videoConfigNoti.autoMute;
+      });
+    });
   }
 
 // [Q]: how to detect current video visibility?
@@ -165,15 +171,15 @@ class _VideoPostState extends State<VideoPost>
     _onTogglePause();
   }
 
-  // void _onMuteTap() {
-  //   _isMuted = !_isMuted;
-  //   if (_isMuted) {
-  //     _videoPlayerController.setVolume(0);
-  //   } else {
-  //     _videoPlayerController.setVolume(20);
-  //   }
-  //   setState(() {});
-  // }
+  void _onMuteTap() {
+    _isMuted = !_isMuted;
+    if (_isMuted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(20);
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -230,9 +236,9 @@ class _VideoPostState extends State<VideoPost>
             left: 20,
             top: 40,
             child: IconButton(
-              onPressed: VideoConfigData.of(context).toggleMuted,
+              onPressed: videoConfigNoti.toggleAutoMute,
               icon: FaIcon(
-                VideoConfigData.of(context).autoMute
+                _autoMuted
                     ? FontAwesomeIcons.volumeHigh
                     : FontAwesomeIcons.volumeOff,
                 color: Colors.white,
