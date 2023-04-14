@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/system_configuration/dark_mode_config.dart';
 import 'package:tiktok_clone/common/widgets/video_configuration/video_config_noti.dart';
+import 'package:tiktok_clone/common/widgets/video_configuration/video_config_value.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -36,6 +38,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           child: ListView(
             children: [
+              ValueListenableBuilder(
+                valueListenable: darkModeConfig,
+                builder: (context, value, child) => SwitchListTile.adaptive(
+                  value: value,
+                  onChanged: (value) {
+                    darkModeConfig.value = !darkModeConfig.value;
+                  },
+                  title: const Text('Dark Mode - ValueListnerbleBuilder'),
+                  subtitle: const Text('Enable notifications'),
+                ),
+              ),
+              ValueListenableBuilder(
+                valueListenable: videoConfigValue,
+                builder: (context, value, child) => SwitchListTile.adaptive(
+                  value: value,
+                  onChanged: (value) {
+                    videoConfigValue.value = !value;
+                  },
+                  title: const Text('ValueNotifier - ValueListnerbleBuilder'),
+                  subtitle: const Text('Enable notifications'),
+                ),
+              ),
+              AnimatedBuilder(
+                animation: videoConfigValue,
+                builder: (context, child) => SwitchListTile.adaptive(
+                  value: videoConfigValue.value,
+                  onChanged: (value) {
+                    videoConfigValue.value = !videoConfigValue.value;
+                  },
+                  title: const Text('ValueNotifier - AnimatedBuilder'),
+                  subtitle: const Text('Enable notifications'),
+                ),
+              ),
               AnimatedBuilder(
                 animation: videoConfigNoti,
                 builder: (context, child) => SwitchListTile.adaptive(

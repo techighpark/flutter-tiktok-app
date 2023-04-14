@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/common/widgets/video_configuration/video_config_noti.dart';
+import 'package:tiktok_clone/common/widgets/video_configuration/video_config_value.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
@@ -53,6 +54,7 @@ class _VideoPostState extends State<VideoPost>
   bool _isPaused = false;
   bool _isMuted = true;
   bool _autoMuted = videoConfigNoti.autoMute;
+  bool _autoMutedValue = videoConfigValue.value;
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
   void _onVideoChange() {
@@ -106,6 +108,11 @@ class _VideoPostState extends State<VideoPost>
     videoConfigNoti.addListener(() {
       setState(() {
         _autoMuted = videoConfigNoti.autoMute;
+      });
+    });
+    videoConfigValue.addListener(() {
+      setState(() {
+        _autoMutedValue = videoConfigValue.value;
       });
     });
   }
@@ -235,14 +242,29 @@ class _VideoPostState extends State<VideoPost>
           Positioned(
             left: 20,
             top: 40,
-            child: IconButton(
-              onPressed: videoConfigNoti.toggleAutoMute,
-              icon: FaIcon(
-                _autoMuted
-                    ? FontAwesomeIcons.volumeHigh
-                    : FontAwesomeIcons.volumeOff,
-                color: Colors.white,
-              ),
+            child: Column(
+              children: [
+                IconButton(
+                  onPressed: videoConfigNoti.toggleAutoMute,
+                  icon: FaIcon(
+                    _autoMuted
+                        ? FontAwesomeIcons.volumeHigh
+                        : FontAwesomeIcons.volumeOff,
+                    color: Colors.white,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    videoConfigValue.value = !videoConfigValue.value;
+                  },
+                  icon: FaIcon(
+                    _autoMutedValue
+                        ? FontAwesomeIcons.volumeHigh
+                        : FontAwesomeIcons.volumeOff,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
           Positioned(
