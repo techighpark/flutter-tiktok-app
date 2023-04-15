@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tiktok_clone/common/widgets/system_configuration/dark_mode_config.dart';
-import 'package:tiktok_clone/common/widgets/video_configuration/video_config_noti.dart';
-import 'package:tiktok_clone/common/widgets/video_configuration/video_config_value.dart';
+import 'package:provider/provider.dart';
+import 'package:tiktok_clone/common/widgets/video_configuration/video_config_provider.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -38,61 +37,77 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           child: ListView(
             children: [
-              ValueListenableBuilder(
-                valueListenable: darkModeConfig,
-                builder: (context, value, child) => SwitchListTile.adaptive(
-                  value: value,
-                  onChanged: (value) {
-                    darkModeConfig.value = !darkModeConfig.value;
-                  },
-                  title: const Text('Dark Mode - ValueListnerbleBuilder'),
-                  subtitle: const Text('Enable notifications'),
-                ),
+              SwitchListTile.adaptive(
+                value: context.watch<VideoConfigProvider>().isMuted,
+                onChanged: (value) {
+                  context.read<VideoConfigProvider>().toggleIsMuted();
+                },
+                title: const Text('Muted - Provider'),
+                subtitle: const Text('Enable notifications'),
               ),
-              ValueListenableBuilder(
-                valueListenable: videoConfigValue,
-                builder: (context, value, child) => SwitchListTile.adaptive(
-                  value: value,
-                  onChanged: (value) {
-                    videoConfigValue.value = !value;
-                  },
-                  title: const Text('ValueNotifier - ValueListnerbleBuilder'),
-                  subtitle: const Text('Enable notifications'),
-                ),
+              SwitchListTile.adaptive(
+                value: context.watch<VideoConfigProvider>().isAutoplay,
+                onChanged: (value) {
+                  context.read<VideoConfigProvider>().toggleIsAutoplay();
+                },
+                title: const Text('Autoplay - Provider'),
+                subtitle: const Text('Enable notifications'),
               ),
-              AnimatedBuilder(
-                animation: videoConfigValue,
-                builder: (context, child) => SwitchListTile.adaptive(
-                  value: videoConfigValue.value,
-                  onChanged: (value) {
-                    videoConfigValue.value = !videoConfigValue.value;
-                  },
-                  title: const Text('ValueNotifier - AnimatedBuilder'),
-                  subtitle: const Text('Enable notifications'),
-                ),
-              ),
-              AnimatedBuilder(
-                animation: videoConfigNoti,
-                builder: (context, child) => SwitchListTile.adaptive(
-                  value: videoConfigNoti.autoMute,
-                  onChanged: (value) => videoConfigNoti.toggleAutoMute(),
-                  title: const Text('Mute Video'),
-                  subtitle: const Text('Videos will be muted by default'),
-                ),
-              ),
+              // ValueListenableBuilder(
+              //   valueListenable: darkModeConfig,
+              //   builder: (context, value, child) => SwitchListTile.adaptive(
+              //     value: value,
+              //     onChanged: (value) {
+              //       darkModeConfig.value = !darkModeConfig.value;
+              //     },
+              //     title: const Text('Dark Mode - ValueListnerbleBuilder'),
+              //     subtitle: const Text('Enable notifications'),
+              //   ),
+              // ),
+              // ValueListenableBuilder(
+              //   valueListenable: videoConfigValue,
+              //   builder: (context, value, child) => SwitchListTile.adaptive(
+              //     value: value,
+              //     onChanged: (value) {
+              //       videoConfigValue.value = !value;
+              //     },
+              //     title: const Text('ValueNotifier - ValueListnerbleBuilder'),
+              //     subtitle: const Text('Enable notifications'),
+              //   ),
+              // ),
+              // AnimatedBuilder(
+              //   animation: videoConfigValue,
+              //   builder: (context, child) => SwitchListTile.adaptive(
+              //     value: videoConfigValue.value,
+              //     onChanged: (value) {
+              //       videoConfigValue.value = !videoConfigValue.value;
+              //     },
+              //     title: const Text('ValueNotifier - AnimatedBuilder'),
+              //     subtitle: const Text('Enable notifications'),
+              //   ),
+              // ),
+              // AnimatedBuilder(
+              //   animation: videoConfigNoti,
+              //   builder: (context, child) => SwitchListTile.adaptive(
+              //     value: videoConfigNoti.autoMute,
+              //     onChanged: (value) => videoConfigNoti.toggleAutoMute(),
+              //     title: const Text('Mute Video'),
+              //     subtitle: const Text('Videos will be muted by default'),
+              //   ),
+              // ),
               SwitchListTile.adaptive(
                 value: _notification,
                 onChanged: _onNotificationChanged,
                 title: const Text('Enable notifications'),
                 subtitle: const Text('Enable notifications'),
               ),
-              CheckboxListTile(
-                value: _notification,
-                onChanged: _onNotificationChanged,
-                title: const Text('Enable notifications'),
-                checkColor: Colors.white,
-                activeColor: Colors.black,
-              ),
+              // CheckboxListTile(
+              //   value: _notification,
+              //   onChanged: _onNotificationChanged,
+              //   title: const Text('Enable notifications'),
+              //   checkColor: Colors.white,
+              //   activeColor: Colors.black,
+              // ),
               ListTile(
                 onTap: () async {
                   final date = await showDatePicker(

@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/video_configuration/video_config_noti.dart';
+import 'package:tiktok_clone/common/widgets/video_configuration/video_config_provider.dart';
 import 'package:tiktok_clone/common/widgets/video_configuration/video_config_value.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
-import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
+import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
+import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -259,6 +261,17 @@ class _VideoPostState extends State<VideoPost>
                   },
                   icon: FaIcon(
                     _autoMutedValue
+                        ? FontAwesomeIcons.volumeHigh
+                        : FontAwesomeIcons.volumeOff,
+                    color: Colors.white,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    context.read<VideoConfigProvider>().toggleIsMuted();
+                  },
+                  icon: FaIcon(
+                    context.watch<VideoConfigProvider>().isMuted
                         ? FontAwesomeIcons.volumeHigh
                         : FontAwesomeIcons.volumeOff,
                     color: Colors.white,
