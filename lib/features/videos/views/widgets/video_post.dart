@@ -2,11 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tiktok_clone/common/widgets/video_configuration/video_config_noti.dart';
-import 'package:tiktok_clone/common/widgets/video_configuration/video_config_provider.dart';
-import 'package:tiktok_clone/common/widgets/video_configuration/video_config_value.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
@@ -52,11 +50,11 @@ class _VideoPostState extends State<VideoPost>
   final String _text =
       'This is a very long text that will be truncated if it exceeds the container.';
   late bool _showMore;
+  late bool _currentMuted;
 
   bool _isPaused = false;
-  bool _isMuted = true;
-  bool _autoMuted = videoConfigNoti.autoMute;
-  bool _autoMutedValue = videoConfigValue.value;
+  // final bool _isMuted = true;
+  // final bool _autoMutedValue = videoConfigValue.value;
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
   void _onVideoChange() {
@@ -75,6 +73,12 @@ class _VideoPostState extends State<VideoPost>
       await _videoPlayerController.setVolume(0);
     }
     _videoPlayerController.addListener(_onVideoChange);
+
+    setState(() {});
+  }
+
+  void _initMuted() {
+    _currentMuted = context.read<PlaybackConfigViewModel>().muted;
     setState(() {});
   }
 
@@ -107,16 +111,34 @@ class _VideoPostState extends State<VideoPost>
     _initVideoPlayer();
     _initAnimation();
     _initShowMore();
-    videoConfigNoti.addListener(() {
-      setState(() {
-        _autoMuted = videoConfigNoti.autoMute;
-      });
-    });
-    videoConfigValue.addListener(() {
-      setState(() {
-        _autoMutedValue = videoConfigValue.value;
-      });
-    });
+    _initMuted();
+
+    context
+        .read<PlaybackConfigViewModel>()
+        .addListener(_onPlaybackConfigChanged);
+
+    // videoConfigNoti.addListener(() {
+    //   setState(() {
+    //     _autoMuted = videoConfigNoti.autoMute;
+    //   });
+    // });
+    // videoConfigValue.addListener(() {
+    //   setState(() {
+    //     _autoMutedValue = videoConfigValue.value;
+    //   });
+    // });
+  }
+
+  void _onPlaybackConfigChanged() {
+    if (!mounted) return;
+
+    final muted = context.read<PlaybackConfigViewModel>().muted;
+
+    if (muted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(1);
+    }
   }
 
 // [Q]: how to detect current video visibility?
@@ -125,7 +147,11 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_videoPlayerController.value.isPlaying &&
         !_isPaused) {
-      _videoPlayerController.play();
+      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
+
+      if (autoplay) {
+        _videoPlayerController.play();
+      }
     }
     // 다른 offStage로 넘어갔을때
     if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
@@ -181,8 +207,8 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onMuteTap() {
-    _isMuted = !_isMuted;
-    if (_isMuted) {
+    _currentMuted = !_currentMuted;
+    if (_currentMuted) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(20);
@@ -247,36 +273,50 @@ class _VideoPostState extends State<VideoPost>
             child: Column(
               children: [
                 IconButton(
-                  onPressed: videoConfigNoti.toggleAutoMute,
                   icon: FaIcon(
-                    _autoMuted
+                    _currentMuted
+                        // context.watch<PlaybackConfigViewModel>().muted
                         ? FontAwesomeIcons.volumeHigh
                         : FontAwesomeIcons.volumeOff,
                     color: Colors.white,
                   ),
-                ),
-                IconButton(
                   onPressed: () {
-                    videoConfigValue.value = !videoConfigValue.value;
+                    // context.read<PlaybackConfigViewModel>().setMuted(
+                    //     !context.read<PlaybackConfigViewModel>().muted);
+                    _onMuteTap();
                   },
-                  icon: FaIcon(
-                    _autoMutedValue
-                        ? FontAwesomeIcons.volumeHigh
-                        : FontAwesomeIcons.volumeOff,
-                    color: Colors.white,
-                  ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    context.read<VideoConfigProvider>().toggleIsMuted();
-                  },
-                  icon: FaIcon(
-                    context.watch<VideoConfigProvider>().isMuted
-                        ? FontAwesomeIcons.volumeHigh
-                        : FontAwesomeIcons.volumeOff,
-                    color: Colors.white,
-                  ),
-                ),
+                // IconButton(
+                //   onPressed: videoConfigNoti.toggleAutoMute,
+                //   icon: FaIcon(
+                //     _autoMuted
+                //         ? FontAwesomeIcons.volumeHigh
+                //         : FontAwesomeIcons.volumeOff,
+                //     color: Colors.white,
+                //   ),
+                // ),
+                // IconButton(
+                //   onPressed: () {
+                //     videoConfigValue.value = !videoConfigValue.value;
+                //   },
+                //   icon: FaIcon(
+                //     _autoMutedValue
+                //         ? FontAwesomeIcons.volumeHigh
+                //         : FontAwesomeIcons.volumeOff,
+                //     color: Colors.white,
+                //   ),
+                // ),
+                // IconButton(
+                //   onPressed: () {
+                //     context.read<VideoConfigProvider>().toggleIsMuted();
+                //   },
+                //   icon: FaIcon(
+                //     context.watch<VideoConfigProvider>().isMuted
+                //         ? FontAwesomeIcons.volumeHigh
+                //         : FontAwesomeIcons.volumeOff,
+                //     color: Colors.white,
+                //   ),
+                // ),
               ],
             ),
           ),
