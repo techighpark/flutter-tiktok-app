@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
@@ -26,7 +26,7 @@ import 'package:visibility_detector/visibility_detector.dart';
  * [AnimatedBuilder]
  */ ///
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
   final int index;
 
@@ -37,10 +37,10 @@ class VideoPost extends StatefulWidget {
   });
 
   @override
-  State<VideoPost> createState() => _VideoPostState();
+  createState() => VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost>
+class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video.mp4");
@@ -78,7 +78,7 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _initMuted() {
-    _currentMuted = context.read<PlaybackConfigViewModel>().muted;
+    _currentMuted = ref.read(playbackvconfigProvider).muted;
     setState(() {});
   }
 
@@ -104,42 +104,15 @@ class _VideoPostState extends State<VideoPost>
     setState(() {});
   }
 
-  @override
-  void initState() {
-    super.initState();
+  // void _onPlaybackConfigChanged() {
+  //   if (!mounted) return;
 
-    _initVideoPlayer();
-    _initAnimation();
-    _initShowMore();
-    _initMuted();
-
-    context
-        .read<PlaybackConfigViewModel>()
-        .addListener(_onPlaybackConfigChanged);
-
-    // videoConfigNoti.addListener(() {
-    //   setState(() {
-    //     _autoMuted = videoConfigNoti.autoMute;
-    //   });
-    // });
-    // videoConfigValue.addListener(() {
-    //   setState(() {
-    //     _autoMutedValue = videoConfigValue.value;
-    //   });
-    // });
-  }
-
-  void _onPlaybackConfigChanged() {
-    if (!mounted) return;
-
-    final muted = context.read<PlaybackConfigViewModel>().muted;
-
-    if (muted) {
-      _videoPlayerController.setVolume(0);
-    } else {
-      _videoPlayerController.setVolume(1);
-    }
-  }
+  //   if (ref.read(playbackvconfigProvider).muted) {
+  //     _videoPlayerController.setVolume(0);
+  //   } else {
+  //     _videoPlayerController.setVolume(1);
+  //   }
+  // }
 
 // [Q]: how to detect current video visibility?
   void _onVisibilityChange(VisibilityInfo info) {
@@ -147,9 +120,9 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_videoPlayerController.value.isPlaying &&
         !_isPaused) {
-      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
+      // final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
 
-      if (autoplay) {
+      if (ref.read(playbackvconfigProvider).autoplay) {
         _videoPlayerController.play();
       }
     }
@@ -182,12 +155,6 @@ class _VideoPostState extends State<VideoPost>
     setState(() {});
   }
 
-  @override
-  void dispose() {
-    _videoPlayerController.dispose();
-    super.dispose();
-  }
-
   void _onCommentTap(BuildContext context) async {
     if (_videoPlayerController.value.isPlaying) {
       _onTogglePause();
@@ -214,6 +181,37 @@ class _VideoPostState extends State<VideoPost>
       _videoPlayerController.setVolume(20);
     }
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _initVideoPlayer();
+    _initAnimation();
+    _initShowMore();
+    _initMuted();
+
+    // context
+    //     .read<PlaybackConfigViewModel>()
+    //     .addListener(_onPlaybackConfigChanged);
+
+    // videoConfigNoti.addListener(() {
+    //   setState(() {
+    //     _autoMuted = videoConfigNoti.autoMute;
+    //   });
+    // });
+    // videoConfigValue.addListener(() {
+    //   setState(() {
+    //     _autoMutedValue = videoConfigValue.value;
+    //   });
+    // });
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    super.dispose();
   }
 
   @override
@@ -276,8 +274,8 @@ class _VideoPostState extends State<VideoPost>
                   icon: FaIcon(
                     _currentMuted
                         // context.watch<PlaybackConfigViewModel>().muted
-                        ? FontAwesomeIcons.volumeHigh
-                        : FontAwesomeIcons.volumeOff,
+                        ? FontAwesomeIcons.volumeOff
+                        : FontAwesomeIcons.volumeHigh,
                     color: Colors.white,
                   ),
                   onPressed: () {
