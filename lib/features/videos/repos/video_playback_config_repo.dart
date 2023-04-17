@@ -7,7 +7,7 @@ class VideoPlaybackConfigRepository {
 
   VideoPlaybackConfigRepository(this._preferences);
 
-  Future<void> setMutedd(bool value) async {
+  Future<void> setMuted(bool value) async {
     _preferences.setBool(_muted, value);
   }
 
