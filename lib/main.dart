@@ -25,7 +25,8 @@ void main() async {
       overrides: [
         playbackvconfigProvider.overrideWith(
           () => PlaybackConfigViewModel(repository),
-        )
+        ),
+        // timelineProvider,
       ],
       child: const TikTokApp(),
     ),
