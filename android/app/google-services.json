@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "142535428939",
+    "project_id": "techigh-tiktok-dev-cli",
+    "storage_bucket": "techigh-tiktok-dev-cli.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142535428939:android:8e11ca8709087e8a5876ce",
+        "android_client_info": {
+          "package_name": "com.example.tiktok_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "142535428939-bn40bkjsbfnh9a3ifsb57m7p9arnnbrk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdk8aaRIB3nUITC2ZhVh4pdjQRiOduudU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "142535428939-bn40bkjsbfnh9a3ifsb57m7p9arnnbrk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "142535428939-h0adqv5dj4p7c4c82qoltutu219br742.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.techigh.tiktok"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
