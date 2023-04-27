@@ -27,12 +27,18 @@ void main() async {
   final repository = VideoPlaybackConfigRepository(preferences);
 
   runApp(
+    /*
+    * reiverpod
+    * works outside the widget tree
+    * don't use context.watch
+    * */
     ProviderScope(
       overrides: [
-        playbackvconfigProvider.overrideWith(
-          () => PlaybackConfigViewModel(repository),
+        playbackConfigProvider.overrideWith(
+              () => PlaybackConfigViewModel(repository),
         ),
         // timelineProvider,
+        // ...
       ],
       child: const TikTokApp(),
     ),
@@ -52,6 +58,7 @@ void main() async {
 
 class TikTokApp extends ConsumerWidget {
   const TikTokApp({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     S.load(const Locale('ko'));

@@ -3,7 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
+import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -15,12 +17,12 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    // print(ref.watch(playbackvconfigProvider).autoplay);
-    // print(ref.exists(playbackvconfigProvider));
-    // ref.listen(playbackvconfigProvider, (previous, next) {
-    //   print(previous!.autoplay);
-    //   print(next);
-    // });
+    /*print(ref.watch(playbackConfigProvider).autoplay);
+      print(ref.exists(playbackConfigProvider));
+      ref.listen(playbackConfigProvider, (previous, next) {
+      print(previous!.autoplay);
+      print(next);
+    });*/
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -93,18 +95,17 @@ class SettingsScreen extends ConsumerWidget {
               // ),
 
               SwitchListTile.adaptive(
-                value: ref.watch(playbackvconfigProvider).muted,
-                onChanged: (value) => {
-                  ref.read(playbackvconfigProvider.notifier).setMuted(value)
-                },
+                value: ref.watch(playbackConfigProvider).muted,
+                onChanged: (value) =>
+                    {ref.read(playbackConfigProvider.notifier).setMuted(value)},
                 title: const Text('Mute Video'),
                 subtitle: const Text('Video will be muted by default'),
               ),
 
               SwitchListTile.adaptive(
-                value: ref.watch(playbackvconfigProvider).autoplay,
+                value: ref.watch(playbackConfigProvider).autoplay,
                 onChanged: (value) => {
-                  ref.read(playbackvconfigProvider.notifier).setAutoplay(value)
+                  ref.read(playbackConfigProvider.notifier).setAutoplay(value)
                 },
                 title: const Text('Autoplay'),
                 subtitle: const Text('Video will start playing automatically'),
@@ -197,7 +198,10 @@ class SettingsScreen extends ConsumerWidget {
                           child: const Text('No'),
                         ),
                         CupertinoDialogAction(
-                          onPressed: () => Navigator.of(context).pop(),
+                          onPressed: () {
+                            ref.read(authRepo).signOut();
+                            context.go('/');
+                          },
                           isDestructiveAction: true,
                           child: const Text('Yes'),
                         ),

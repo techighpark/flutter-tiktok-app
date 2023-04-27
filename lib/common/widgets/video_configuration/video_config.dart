@@ -1,5 +1,10 @@
 import 'package:flutter/widgets.dart';
 
+//inheritedWidget provide data but doesn't have mechanism for updating data.
+//combine statefulWidget with inheritedWidget
+//it could share a method to change data
+//but cannot provide the method in inheritedWidget
+// + main
 class VideoConfigData extends InheritedWidget {
   final bool autoMute;
   final void Function() toggleMuted;
@@ -11,9 +16,10 @@ class VideoConfigData extends InheritedWidget {
     required this.toggleMuted,
   });
 
-  // static VideoConfigData of(BuildContext context) {
-  //   return context.dependOnInheritedWidgetOfExactType<VideoConfigData>()!;
-  // }
+  //important
+  static VideoConfigData of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<VideoConfigData>()!;
+  }
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {
@@ -21,7 +27,9 @@ class VideoConfigData extends InheritedWidget {
   }
 }
 
+//statefulWidget
 class VideoConfig extends StatefulWidget {
+  //important
   final Widget child;
 
   const VideoConfig({
@@ -30,10 +38,10 @@ class VideoConfig extends StatefulWidget {
   });
 
   @override
-  State<VideoConfig> createState() => _VideoConfgState();
+  State<VideoConfig> createState() => _VideoConfigState();
 }
 
-class _VideoConfgState extends State<VideoConfig> {
+class _VideoConfigState extends State<VideoConfig> {
   bool autoMute = true;
 
   void toggleMuted() {

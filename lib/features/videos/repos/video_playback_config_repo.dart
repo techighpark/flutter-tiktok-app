@@ -1,18 +1,21 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VideoPlaybackConfigRepository {
-  static const String _autopaly = "autoplay";
+  static const String _autoplay = "autoplay";
   static const String _muted = "muted";
   final SharedPreferences _preferences;
 
   VideoPlaybackConfigRepository(this._preferences);
 
+  // VideoPlaybackConfigRepository({required preferences})
+  //     : _preferences = preferences;
+  
   Future<void> setMuted(bool value) async {
     _preferences.setBool(_muted, value);
   }
 
   Future<void> setAutoplay(bool value) async {
-    _preferences.setBool(_autopaly, value);
+    _preferences.setBool(_autoplay, value);
   }
 
   bool isMuted() {
@@ -20,6 +23,6 @@ class VideoPlaybackConfigRepository {
   }
 
   bool isAutoplay() {
-    return _preferences.getBool(_autopaly) ?? false;
+    return _preferences.getBool(_autoplay) ?? false;
   }
 }

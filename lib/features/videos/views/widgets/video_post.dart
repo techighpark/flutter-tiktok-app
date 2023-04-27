@@ -11,20 +11,19 @@ import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-/**video post
- * [VideoPlayer]
- * [VisibilityDetector]
- * - onVisibilityChanged
- * Custom Animation
- * - [AnimatiionController]
- * - [SingleTickerProviderStateMixin]
- *  : Provides a single Ticker that is configured to only tick while the current tree is enabled, as defined by TickerMode.
- *  [TickerProvideerStateMixin] - multifple
- * - vsync: this
- *  : 위젯이 안 보일 때는 애니메이션 동작 prevent
- *  : prevent to waste resource
- * [AnimatedBuilder]
- */ ///
+/// video post
+/// [VideoPlayer]
+/// [VisibilityDetector]
+/// - onVisibilityChanged
+/// Custom Animation
+/// - [AnimationController]
+/// - [SingleTickerProviderStateMixin]
+///  : Provides a single Ticker that is configured to only tick while the current tree is enabled, as defined by TickerMode.
+///  [TickerProviderStateMixin] - multiple
+/// - vsync: this
+///  : 위젯이 안 보일 때는 애니메이션 동작 prevent
+///  : prevent to waste resource
+/// [AnimatedBuilder]
 
 class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
@@ -53,6 +52,7 @@ class VideoPostState extends ConsumerState<VideoPost>
   late bool _currentMuted;
 
   bool _isPaused = false;
+
   // final bool _isMuted = true;
   // final bool _autoMutedValue = videoConfigValue.value;
   final Duration _animationDuration = const Duration(milliseconds: 200);
@@ -78,7 +78,7 @@ class VideoPostState extends ConsumerState<VideoPost>
   }
 
   void _initMuted() {
-    _currentMuted = ref.read(playbackvconfigProvider).muted;
+    _currentMuted = ref.read(playbackConfigProvider).muted;
     setState(() {});
   }
 
@@ -107,7 +107,7 @@ class VideoPostState extends ConsumerState<VideoPost>
   // void _onPlaybackConfigChanged() {
   //   if (!mounted) return;
 
-  //   if (ref.read(playbackvconfigProvider).muted) {
+  //   if (ref.read(playbackConfigProvider).muted) {
   //     _videoPlayerController.setVolume(0);
   //   } else {
   //     _videoPlayerController.setVolume(1);
@@ -122,7 +122,7 @@ class VideoPostState extends ConsumerState<VideoPost>
         !_isPaused) {
       // final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
 
-      if (ref.read(playbackvconfigProvider).autoplay) {
+      if (ref.read(playbackConfigProvider).autoplay) {
         _videoPlayerController.play();
       }
     }
@@ -217,9 +217,8 @@ class VideoPostState extends ConsumerState<VideoPost>
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
-      // 화면에 보이는 게 바뀔대
+      /// 화면에 보이는 게 바뀔대
       onVisibilityChanged: _onVisibilityChange,
-      // Q
       key: Key("${widget.index}"),
       child: Stack(
         children: [
@@ -235,9 +234,10 @@ class VideoPostState extends ConsumerState<VideoPost>
               onTap: _onTogglePause,
             ),
           ),
-          // NOTICE: positioned - must be a child of Stack
+
+          /// NOTICE: positioned - must be a child of Stack
           Positioned.fill(
-            // 클릭 비활성화 - 왜 사용했지??
+            /// 클릭 비활성화 - 왜 사용했지??
             child: IgnorePointer(
               child: Center(
                 // 2nd method of animate
@@ -279,8 +279,8 @@ class VideoPostState extends ConsumerState<VideoPost>
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    // context.read<PlaybackConfigViewModel>().setMuted(
-                    //     !context.read<PlaybackConfigViewModel>().muted);
+/*                    context.read<PlaybackConfigViewModel>().setMuted(
+                        !context.read<PlaybackConfigViewModel>().muted);*/
                     _onMuteTap();
                   },
                 ),
