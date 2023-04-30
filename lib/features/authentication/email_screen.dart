@@ -16,6 +16,7 @@ class EmailScreen extends ConsumerStatefulWidget {
   // static String routeName = "email";
   // static String routeUrl = "email";
   final String username;
+
   const EmailScreen({
     super.key,
     required this.username,
@@ -61,7 +62,11 @@ class UsernameScreenState extends ConsumerState<EmailScreen> {
 
   void _onSubmit() {
     if (_email.isEmpty || _isEmailValid() != null) return;
-    ref.read(signUpForm.notifier).state = {"email": _email};
+    final state = ref.read(signUpFormProvider.notifier).state;
+    ref.read(signUpFormProvider.notifier).state = {
+      ...state,
+      "email": _email,
+    };
     Navigator.push(
       context,
       MaterialPageRoute(

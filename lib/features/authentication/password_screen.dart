@@ -36,7 +36,7 @@ class _UsernameScreenState extends ConsumerState<PasswordScreen> {
     super.dispose();
   }
 
-  bool _isPasswordlValid() {
+  bool _isPasswordValid() {
     return _password.isNotEmpty && _password.length >= 8;
   }
 
@@ -46,9 +46,13 @@ class _UsernameScreenState extends ConsumerState<PasswordScreen> {
   }
 
   void _onSubmit() {
-    if (!_isPasswordlValid()) return;
-    final state = ref.read(signUpForm.notifier).state;
-    ref.read(signUpForm.notifier).state = {...state, "password": _password};
+    print('password_scr - onSubmit');
+    if (!_isPasswordValid()) return;
+    final state = ref.read(signUpFormProvider.notifier).state;
+    ref.read(signUpFormProvider.notifier).state = {
+      ...state,
+      "password": _password
+    };
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -61,7 +65,7 @@ class _UsernameScreenState extends ConsumerState<PasswordScreen> {
     _passwordController.clear();
   }
 
-  void _togglenObscureText() {
+  void _toggleObscureText() {
     _obscureText = !_obscureText;
     setState(() {});
   }
@@ -112,7 +116,7 @@ class _UsernameScreenState extends ConsumerState<PasswordScreen> {
                       ),
                       Gaps.h16,
                       GestureDetector(
-                        onTap: _togglenObscureText,
+                        onTap: _toggleObscureText,
                         child: FaIcon(
                           _obscureText
                               ? FontAwesomeIcons.eye
@@ -150,13 +154,13 @@ class _UsernameScreenState extends ConsumerState<PasswordScreen> {
                   FaIcon(
                     FontAwesomeIcons.circleCheck,
                     size: Sizes.size16,
-                    color: _isPasswordlValid() ? Colors.green : Colors.red,
+                    color: _isPasswordValid() ? Colors.green : Colors.red,
                   ),
                   Gaps.h5,
                   AnimatedDefaultTextStyle(
                     duration: const Duration(microseconds: 500),
                     style: TextStyle(
-                      color: _isPasswordlValid()
+                      color: _isPasswordValid()
                           ? isDarkMode(context)
                               ? Colors.white
                               : Colors.black
@@ -169,7 +173,7 @@ class _UsernameScreenState extends ConsumerState<PasswordScreen> {
               Gaps.v28,
               GestureDetector(
                 onTap: _onSubmit,
-                child: FormButton(disabled: !_isPasswordlValid()),
+                child: FormButton(disabled: !_isPasswordValid()),
               ),
             ],
           ),

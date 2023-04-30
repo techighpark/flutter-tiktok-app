@@ -9,8 +9,11 @@ class TimelineViewModel extends AsyncNotifier<List<VideoModel>> {
     // loading state를 다시 trigger시키는 방법
     state = const AsyncValue.loading();
     await Future.delayed(const Duration(seconds: 2));
-    final newVideo = VideoModel(title: "${DateTime.now()}");
-    _list = [..._list, newVideo];
+
+    ///```dart
+    /// final newVideo = VideoModel(title: "${DateTime.now()}");
+    /// ```
+    _list = [..._list];
     // AsyncNotifier라서
     state = AsyncValue.data(_list);
   }

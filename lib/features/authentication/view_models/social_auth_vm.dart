@@ -16,16 +16,18 @@ class SocialAuthViewModel extends AsyncNotifier<void> {
   Future<void> githubSignIn(BuildContext context) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(
-      () async => await _repository.githubSignIn(),
+          () async => await _repository.githubSignIn(),
     );
-    if (state.hasError) {
-      showFirebaseErrorSnack(context, state.error);
-    } else {
-      context.go("/home");
+    if (context.mounted) {
+      if (state.hasError) {
+        showFirebaseErrorSnack(context, state.error);
+      } else {
+        context.go("/home");
+      }
     }
   }
 }
 
 final socialAuthProvider = AsyncNotifierProvider<SocialAuthViewModel, void>(
-  () => SocialAuthViewModel(),
+      () => SocialAuthViewModel(),
 );

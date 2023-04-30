@@ -12,12 +12,19 @@ import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 import 'package:tiktok_clone/features/videos/views/video_recording_screen.dart';
 
 final routerProvider = Provider((ref) {
-  // ref.watch(authState);
+  /// StreamProvider
+  /// ```dart
+  /// ref.watch(authState);
+  /// ```
   return GoRouter(
     initialLocation: "/home",
+
+    /// Redirect to anywhere depending on state
     redirect: (context, state) {
       final isLoggedIn = ref.read(authRepo).isLoggedIn;
       if (!isLoggedIn) {
+        /// subloc = sub location
+        /// The location where user is.
         if (state.subloc != SignUpScreen.routeUrl &&
             state.subloc != LoginScreen.routeUrl) {
           return SignUpScreen.routeUrl;
