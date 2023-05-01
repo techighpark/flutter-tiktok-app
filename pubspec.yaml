@@ -69,6 +69,7 @@ dependencies:
   firebase_storage: ^11.1.1
   dartdoc: ^6.2.1
   path_provider: 2.0.14
+  cloud_functions: ^4.1.1
 
 dev_dependencies:
   flutter_test:

@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -64,6 +61,16 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCLlSsH9TN60c5Uy-iFWqP-Js_ZmHKFzyo',
+    appId: '1:142535428939:ios:63e24189fe9a96025876ce',
+    messagingSenderId: '142535428939',
+    projectId: 'techigh-tiktok-dev-cli',
+    storageBucket: 'techigh-tiktok-dev-cli.appspot.com',
+    iosClientId: '142535428939-h0adqv5dj4p7c4c82qoltutu219br742.apps.googleusercontent.com',
+    iosBundleId: 'com.techigh.tiktok',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCLlSsH9TN60c5Uy-iFWqP-Js_ZmHKFzyo',
     appId: '1:142535428939:ios:63e24189fe9a96025876ce',
     messagingSenderId: '142535428939',
