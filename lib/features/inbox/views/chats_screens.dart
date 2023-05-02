@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/inbox/chat_detail_screen.dart';
+import 'package:tiktok_clone/features/inbox/views/chat_detail_screen.dart';
+import 'package:tiktok_clone/features/inbox/views/select_users_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
   static const String routeName = "chats";
   static const String routeUrl = "/chats";
+
   const ChatsScreen({super.key});
 
   @override
@@ -59,7 +61,17 @@ class _ChatsScreenState extends State<ChatsScreen> {
     // );
   }
 
+  void _onPlusTap(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SelectUsersScreen(),
+      ),
+    );
+  }
+
   ListTile _makeTile(int index) {
+    print('chat_screens - _makeTile');
     return ListTile(
       onLongPress: () => _removeItem(index),
       onTap: () => _onChatTap(index),
@@ -104,7 +116,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
         elevation: 1,
         actions: [
           IconButton(
-            onPressed: _addItem,
+            onPressed: () => _onPlusTap(context),
             icon: const FaIcon(
               FontAwesomeIcons.plus,
               size: Sizes.size20,

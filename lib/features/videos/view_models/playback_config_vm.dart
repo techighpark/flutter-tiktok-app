@@ -8,10 +8,10 @@ import 'package:tiktok_clone/features/videos/repos/video_playback_config_repo.da
 class PlaybackConfigViewModel extends Notifier<PlaybackConfigModel> {
   final VideoPlaybackConfigRepository _repository;
 
-  /*late final PlaybackConfigModel _model = PlaybackConfigModel(
-    muted: _repository.isMuted(),
-    autoplay: _repository.isAutoplay(),
-  );*/
+  /// late final PlaybackConfigModel _model = PlaybackConfigModel(
+  /// muted: _repository.isMuted(),
+  /// autoplay: _repository.isAutoplay(),
+  /// );
 
   /// constructor
   PlaybackConfigViewModel(this._repository);
@@ -33,8 +33,8 @@ class PlaybackConfigViewModel extends Notifier<PlaybackConfigModel> {
 
   /// this method set muted value
   ///
-  /// @param [value] muted value
-  /// @return void
+  /// [value] muted value
+  ///  void
   void setMuted(bool value) {
     _repository.setMuted(value);
     state = PlaybackConfigModel(

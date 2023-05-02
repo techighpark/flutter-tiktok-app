@@ -43,6 +43,7 @@ class UploadVideoViewModel extends AsyncNotifier<void> {
           ///When my task is completed, metadata has data.
           if (task.metadata != null) {
             final uploadedVideo = VideoModel(
+              id: "",
               creator: userProfile.name,
               title: "From Flutter",
               description: "Here we go!",

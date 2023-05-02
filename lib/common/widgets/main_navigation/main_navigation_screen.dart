@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/discover/discover_screen.dart';
-import 'package:tiktok_clone/features/inbox/inbox_screen.dart';
+import 'package:tiktok_clone/features/inbox/views/inbox_screen.dart';
 import 'package:tiktok_clone/common/widgets/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone/common/widgets/main_navigation/widgets/post_video_button.dart';
 import 'package:tiktok_clone/features/users/user_profile_screen.dart';
@@ -15,6 +15,7 @@ import 'package:tiktok_clone/utils.dart';
 class MainNavigationScreen extends StatefulWidget {
   static const String routeName = 'mainNavigation';
   final String tab;
+
   const MainNavigationScreen({
     super.key,
     required this.tab,

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/inbox/activity_screen.dart';
-import 'package:tiktok_clone/features/inbox/chats_screens.dart';
-import 'package:tiktok_clone/features/inbox/widgets/inbox_list_tile.dart';
+import 'package:tiktok_clone/features/inbox/views/activity_screen.dart';
+import 'package:tiktok_clone/features/inbox/views/chats_screens.dart';
+import 'package:tiktok_clone/features/inbox/views/widgets/inbox_list_tile.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class InboxScreen extends StatelessWidget {
@@ -70,7 +70,7 @@ class InboxScreen extends StatelessWidget {
           ),
           const InboxListTile(
             title: 'New Followers',
-            subtitle: 'Messages from followers will apperr here',
+            subtitle: 'Messages from followers will appear here',
             leadingIcon: FontAwesomeIcons.users,
             trailingIcon: FontAwesomeIcons.chevronRight,
           ),

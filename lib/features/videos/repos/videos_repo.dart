@@ -22,6 +22,62 @@ class VideosRepository {
     print("videos_repo - saveVideo");
     await _db.collection('videos').add(data.toJson());
   }
+
+  /// fetch, pagination, infinite scroll
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchVideos({
+    int? lastItemCreatedAt,
+  }) {
+    final query = _db
+        .collection("videos")
+        .orderBy("createdAt", descending: true)
+        .limit(2);
+
+    if (lastItemCreatedAt == null) {
+      return query.get();
+    } else {
+      return query.startAfter([lastItemCreatedAt]).get();
+    }
+  }
+
+  Future<void> toggleLikeVideo(String videoId, String userId) async {
+    print("videos_repo - toggleLikeVideo");
+
+    /// expensive query to find whether I liked or not
+    /// await _db.collection('likes').where("videoId", isEqualTo: videoId).where("userId",isEqualTo: userId);
+    final query = _db.collection('likes').doc("${videoId}000$userId");
+    final like = await query.get();
+    if (!like.exists) {
+      await query.set({
+        "createdAt": DateTime.now().millisecondsSinceEpoch,
+      });
+    } else {
+      await query.delete();
+    }
+  }
+
+  Future<bool> isLiked({
+    required String videoId,
+    required String userId,
+  }) async {
+    final query = _db.collection('likes').doc("${videoId}000$userId");
+    final like = await query.get();
+    print("videos_repo - isLiked : ${like.exists}");
+    return like.exists;
+  }
+
+  Future likeCount({
+    required String videoId,
+  }) async {
+    final query = _db.collection('videos').doc("$videoId");
+    final videoRef = await query.get();
+    final video = videoRef.data();
+    print("videos_repo - likeCount");
+    if (video == null) {
+      return 0;
+    } else {
+      return video['likes'];
+    }
+  }
 }
 
 final videoRepo = Provider((ref) => VideosRepository());

@@ -4,7 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/users/view_models/users_view_model.dart';
+import 'package:tiktok_clone/features/videos/models/video_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
+import 'package:tiktok_clone/features/videos/view_models/video_post_vm.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
@@ -28,11 +31,13 @@ import 'package:visibility_detector/visibility_detector.dart';
 class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
   final int index;
+  final VideoModel videoData;
 
   const VideoPost({
     super.key,
     required this.onVideoFinished,
     required this.index,
+    required this.videoData,
   });
 
   @override
@@ -51,6 +56,8 @@ class VideoPostState extends ConsumerState<VideoPost>
   late bool _showMore;
   late bool _currentMuted;
 
+  // late bool _isLiked = ref.read();
+
   bool _isPaused = false;
 
   // final bool _isMuted = true;
@@ -64,6 +71,11 @@ class VideoPostState extends ConsumerState<VideoPost>
         widget.onVideoFinished();
       }
     }
+  }
+
+  void _onLikeTap() {
+    /// ref.read(videoPostProvider.notifier).likeVideo(videoId);
+    ref.read(videoPostProvider(widget.videoData.id).notifier).toggleLikeVideo();
   }
 
   void _initVideoPlayer() async {
@@ -88,8 +100,8 @@ class VideoPostState extends ConsumerState<VideoPost>
     _animationController = AnimationController(
       // this = ticker
       vsync: this,
-      lowerBound: 1.0,
       upperBound: 1.5,
+      lowerBound: 1.0,
       value: 1.5,
       duration: _animationDuration,
     );
@@ -191,7 +203,6 @@ class VideoPostState extends ConsumerState<VideoPost>
     _initAnimation();
     _initShowMore();
     _initMuted();
-
     // context
     //     .read<PlaybackConfigViewModel>()
     //     .addListener(_onPlaybackConfigChanged);
@@ -225,8 +236,9 @@ class VideoPostState extends ConsumerState<VideoPost>
           Positioned.fill(
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(_videoPlayerController)
-                : Container(
-                    color: Colors.black,
+                : Image.network(
+                    widget.videoData.thumbnailUrl,
+                    fit: BoxFit.cover,
                   ),
           ),
           Positioned.fill(
@@ -324,9 +336,9 @@ class VideoPostState extends ConsumerState<VideoPost>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  '@xpzm',
-                  style: TextStyle(
+                Text(
+                  '@${widget.videoData.creator}',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: Sizes.size20,
                     fontWeight: FontWeight.bold,
@@ -338,7 +350,7 @@ class VideoPostState extends ConsumerState<VideoPost>
                   child: SizedBox(
                     width: 300,
                     child: Text(
-                      'This is a very long text that will be truncated if it exceeds the container.',
+                      widget.videoData.description,
                       overflow: _showMore
                           ? TextOverflow.visible
                           : TextOverflow.ellipsis,
@@ -380,21 +392,39 @@ class VideoPostState extends ConsumerState<VideoPost>
                   radius: 25,
                   backgroundColor: Colors.black,
                   foregroundColor: Theme.of(context).primaryColor,
-                  foregroundImage: const NetworkImage(
-                      'https://avatars.githubusercontent.com/u/75081212?v=4'),
-                  child: const Text('xpzm'),
+                  foregroundImage: ref.read(usersProvider).value!.hasAvatar
+                      ? NetworkImage(
+                          'https://firebasestorage.googleapis.com/v0/b/techigh-tiktok-dev-cli.appspot.com/o/avatars%2F${widget.videoData.creatorUid}?alt=media')
+                      : null,
+                  child: Text(widget.videoData.creator),
                 ),
                 Gaps.v24,
-                VideoButton(
-                  icon: FontAwesomeIcons.solidHeart,
-                  text: S.of(context).likeCount(123123),
-                ),
+                ref.watch(videoPostProvider(widget.videoData.id)).when(
+                      data: (data) {
+                        return GestureDetector(
+                          onTap: _onLikeTap,
+                          child: VideoButton(
+                            isOn: data['isLiked'],
+                            icon: FontAwesomeIcons.solidHeart,
+                            text: S.of(context).likeCount(data['likeCount']),
+                          ),
+                        );
+                      },
+                      loading: () => GestureDetector(
+                        onTap: null,
+                        child: VideoButton(
+                          icon: Icons.favorite,
+                          text: '${widget.videoData.likes}',
+                        ),
+                      ),
+                      error: (error, stackTrace) => const SizedBox(),
+                    ),
                 Gaps.v24,
                 GestureDetector(
                   onTap: () => _onCommentTap(context),
                   child: VideoButton(
                     icon: FontAwesomeIcons.solidComment,
-                    text: S.of(context).commentCount(93938),
+                    text: S.of(context).commentCount(widget.videoData.comments),
                   ),
                 ),
                 Gaps.v24,

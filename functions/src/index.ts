@@ -44,12 +44,12 @@ export const onVideoCreated = functions.firestore
 
         // make the file public
         await file.makePublic();
-        // update firestore at videos/:videoId
+        // update firestore - videos/:videoId
         await snapshot.ref.update({
             thumbnailUrl: file.publicUrl()
         });
         const db = admin.firestore();
-        // take a long time to query
+        // bottom query take a long time
         // db.collection("videos").where("creatorUid", "==", 123);
         // create firestore - users/:userId/videos/:videoId
         db.collection("users")
@@ -60,6 +60,68 @@ export const onVideoCreated = functions.firestore
                 thumbnailUrl: file.publicUrl(),
                 videoId: snapshot.id,
             });
+    });
 
 
+export const onLikedCreated = functions.firestore
+    .document("likes/{likeId}")
+    .onCreate(async (snapshot, context) => {
+        const db = admin.firestore();
+        const [videoId, userId] = snapshot.id.split("000");
+        await db
+            .collection("videos")
+            .doc(videoId)
+            .update({
+                likes: admin.firestore.FieldValue.increment(1),
+            });
+
+
+        const videoRef = await db
+            .collection("videos")
+            .doc(videoId)
+            .get();
+
+        const videoData = videoRef.data();
+        if (videoData) {
+            await db.
+                collection("users")
+                .doc(userId)
+                .collection('likes')
+                .doc(videoId)
+                .set({
+                    videoId: videoId,
+                    thumbnailUrl: videoData.thumbnailUrl,
+                })
+        }
+
+    });
+
+
+export const onLikedRemoved = functions.firestore
+    .document("likes/{likeId}")
+    .onDelete(async (snapshot, context) => {
+        const db = admin.firestore();
+        const [videoId, userId] = snapshot.id.split("000");
+        await db
+            .collection("videos")
+            .doc(videoId)
+            .update({
+                likes: admin.firestore.FieldValue.increment(-1),
+            });
+
+
+        const videoRef = await db
+            .collection("videos")
+            .doc(videoId)
+            .get();
+
+        const videoData = videoRef.data();
+        if (videoData) {
+            await db.
+                collection("users")
+                .doc(userId)
+                .collection('likes')
+                .doc(videoId)
+                .delete();
+        }
     });
