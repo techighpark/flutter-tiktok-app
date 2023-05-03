@@ -116,7 +116,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
         elevation: 1,
         actions: [
           IconButton(
-            onPressed: () => _onPlusTap(context),
+            onPressed: () => _addItem(),
             icon: const FaIcon(
               FontAwesomeIcons.plus,
               size: Sizes.size20,
