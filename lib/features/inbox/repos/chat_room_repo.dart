@@ -10,16 +10,24 @@ class ChatRoomRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
+  /// fetch, pagination, infinite scroll
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchChatRooms() {
+    print('chat_room_repo - fetchChatRooms');
+    final query = _db.collection("chat_rooms");
+    return query.get();
+  }
+
   Future<QuerySnapshot<Map<String, dynamic>>> getUsers() async {
     List users = [];
     final querySnapshot = await _db.collection('users').get();
     return querySnapshot;
   }
 
-// create profile
+  /// create profile
   Future<void> createChatroom(List<UserProfileModel> users) async {
     print('chat_room_repo - createChatroom');
-    // await _db.collection("chat_rooms").doc(profile.uid).set(profile.toJson());
+
+    /// await _db.collection("chat_rooms").doc(profile.uid).set(profile.toJson());
   }
 }
 

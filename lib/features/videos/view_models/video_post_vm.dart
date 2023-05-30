@@ -5,6 +5,8 @@ import 'package:tiktok_clone/features/authentication/repos/authentication_repo.d
 import 'package:tiktok_clone/features/users/repos/user_repo.dart';
 import 'package:tiktok_clone/features/videos/repos/videos_repo.dart';
 
+/// TODO [FamilyAsyncNotifier]
+/// build 메소드에 parameter를 보낼 수 있도록 해줌
 class VideoPostViewModel
     extends FamilyAsyncNotifier<Map<String, dynamic>, String> {
   late final VideosRepository _videoRepository;

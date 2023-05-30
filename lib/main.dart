@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tiktok_clone/features/notification/notifications_provider.dart';
 import 'package:tiktok_clone/features/videos/repos/video_playback_config_repo.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/firebase_options.dart';
@@ -12,11 +14,16 @@ import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/router.dart';
 
 void main() async {
+  /// FlutterError.onError = (FlutterErrorDetails details) {
+  ///   FlutterError.dumpErrorToConsole(details);
+  ///   FlutterError.demangleStackTrace(details.stack!);
+  /// };
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   await SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
@@ -35,7 +42,7 @@ void main() async {
     ProviderScope(
       overrides: [
         playbackConfigProvider.overrideWith(
-              () => PlaybackConfigViewModel(repository),
+          () => PlaybackConfigViewModel(repository),
         ),
         // timelineProvider,
         // ...
@@ -61,6 +68,10 @@ class TikTokApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    /// TODO [FirebaseMessaging]
+    /// 앱이 실행되자 마자 코드 실행
+    ref.watch(notificationsProvider);
+
     S.load(const Locale('ko'));
     return MaterialApp.router(
       routerConfig: ref.watch(routerProvider),

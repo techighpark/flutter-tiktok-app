@@ -55,7 +55,6 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
   Widget build(BuildContext context) {
     return ref.watch(timelineProvider).when(
           data: (videos) {
-            _itemCount = videos.length;
             return RefreshIndicator(
               semanticsLabel: 'abc',
               edgeOffset: 20,

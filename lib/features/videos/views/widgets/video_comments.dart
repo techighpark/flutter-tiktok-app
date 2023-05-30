@@ -69,11 +69,11 @@ class _VideoCommentsState extends State<VideoComments> {
             children: [
               // scrollbar - depend on me
               Scrollbar(
-                // 따라서, Scrollbar 위젯을 사용할 때 controller 속성을 지정하지 않아도 자동으로 연결되므로,
-                //스크롤바를 사용할 때는 별도로 controller를 설정해줄 필요가 없습니다.
-                // 하지만, Scrollbar 위젯의 controller 속성을 지정하면, 스크롤바의 위치와 크기를 직접 제어할 수 있습니다.
-                //예를 들어, 스크롤바의 위치를 화면의 오른쪽에 고정하고 싶은 경우,
-                //controller 속성을 사용하여 스크롤바의 위치를 직접 지정할 수 있습니다.
+                /// 따라서, Scrollbar 위젯을 사용할 때 controller 속성을 지정하지 않아도 자동으로 연결되므로,
+                /// 스크롤바를 사용할 때는 별도로 controller를 설정해줄 필요가 없습니다.
+                /// 하지만, Scrollbar 위젯의 controller 속성을 지정하면, 스크롤바의 위치와 크기를 직접 제어할 수 있습니다.
+                /// 예를 들어, 스크롤바의 위치를 화면의 오른쪽에 고정하고 싶은 경우,
+                /// controller 속성을 사용하여 스크롤바의 위치를 직접 지정할 수 있습니다.
                 controller: _scrollController,
                 child: ListView.separated(
                   controller: _scrollController,
